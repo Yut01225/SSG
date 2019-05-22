@@ -15,6 +15,7 @@ public class HandleTest : Editor
     SerializedProperty HorizontalAngle;
     SerializedProperty VerticalAngle;
     SerializedProperty StopTime;
+    SerializedProperty s;
 
     void OnEnable()
     {
@@ -27,6 +28,7 @@ public class HandleTest : Editor
         positionView = serializedObject.FindProperty("HorizontalAngle");
         StoppingAngleChange = serializedObject.FindProperty("VerticalAngle");
         NextCameraOption = serializedObject.FindProperty("StopTime");
+        s = serializedObject.FindProperty("s");
     }
 
     public override void OnInspectorGUI()
@@ -71,9 +73,11 @@ public class HandleTest : Editor
         EditorGUILayout.Space();
         GUILayout.Label("【Time】");
         myData.StopTime = EditorGUILayout.FloatField("Stop_Time", myData.StopTime);
+        myData.s = (Sample)(EditorGUILayout.ObjectField("obj", myData.s, typeof(Sample)));
+        GUILayout.Label("【Time】");
     }
 
-        void OnSceneGUI()
+    void OnSceneGUI()
     {
         HandleData data = (HandleData)target;
         data.pos = data.transform.position;
@@ -114,10 +118,10 @@ public class HandleTest : Editor
                             text = "D";
                             break;
                     }
-                    Handles.Label((data.s.getList()[i].transform.position + new Vector3(0f,2.5f,0f)),text);
+                    Handles.Label((data.s.getList()[i].transform.position + new Vector3(0f, 2.5f, 0f)), text);
 
                     //タイマーを設定している
-                    if(data.s.getList()[i].GetComponent<HandleData>().getStopTime() > 0)
+                    if (data.s.getList()[i].GetComponent<HandleData>().getStopTime() > 0)
                     {
                         Handles.Label((data.s.getList()[i].transform.position + new Vector3(0f, -2.5f, 0f)), "Stop : " + data.s.getList()[i].GetComponent<HandleData>().getStopTime() + "s");
                     }
@@ -146,7 +150,7 @@ public class HandleTest : Editor
 
             }
             //　アンチエイリアスの線を繋ぐ
-            Handles.DrawAAPolyLine(5f,points);
+            Handles.DrawAAPolyLine(5f, points);
         }
 
     }

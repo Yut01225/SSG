@@ -16,6 +16,7 @@ public class HandleTest : Editor
     SerializedProperty VerticalAngle;
     SerializedProperty StopTime;
     SerializedProperty s;
+    SerializedProperty LookTarget;
 
     void OnEnable()
     {
@@ -29,6 +30,7 @@ public class HandleTest : Editor
         StoppingAngleChange = serializedObject.FindProperty("VerticalAngle");
         NextCameraOption = serializedObject.FindProperty("StopTime");
         s = serializedObject.FindProperty("s");
+        LookTarget = serializedObject.FindProperty("LookTarget");
     }
 
     public override void OnInspectorGUI()
@@ -39,42 +41,80 @@ public class HandleTest : Editor
         HandleData myData = (HandleData)target;
         GUILayout.Label("【Edit_Option】");
         myData.positionView = EditorGUILayout.ToggleLeft("View_Position", myData.positionView);
+        EditorGUILayout.HelpBox("目的地までの距離の差を(x,y,z)表記で表示します。", MessageType.None, true);
         EditorGUILayout.Space();
         GUILayout.Label("【Options】");
         myData.StoppingAngleChange = EditorGUILayout.ToggleLeft("Stopping_AngleChange", myData.StoppingAngleChange);
-
-        float leftValue = -90.0f;
-        float rightValue = 90.0f;
-
+        EditorGUILayout.HelpBox("停止中に、方向転換を有効にします。", MessageType.None, true);
+        float leftValue = -179.0f;
+        float rightValue = 179.0f;
+        EditorGUILayout.Space();
+        GUILayout.Label("【Angle】");
         myData.NextCameraOption = (LookOption)EditorGUILayout.EnumPopup("Camera_Option", (LookOption)myData.NextCameraOption);
         switch (myData.NextCameraOption)
         {
             case LookOption.NextTarget:
+                EditorGUILayout.HelpBox("次の目的地に方向を変えます。", MessageType.None, true);
                 break;
             case LookOption.LookAtHorizontal:
-                EditorGUILayout.Space();
-                GUILayout.Label("【Angle】");
                 GUILayout.Label("Horizontal_Angle");
                 myData.HorizontalAngle = EditorGUILayout.Slider(myData.HorizontalAngle, leftValue, rightValue);
+                EditorGUILayout.HelpBox("現在の向きから水平方向に指定した角度方向を変えます。", MessageType.None, true);
                 break;
             case LookOption.LookAtVertical:
-                EditorGUILayout.Space();
-                GUILayout.Label("【Angle】");
                 GUILayout.Label("Vertical_Angle");
                 myData.VerticalAngle = EditorGUILayout.Slider(myData.VerticalAngle, leftValue, rightValue);
+                EditorGUILayout.HelpBox("現在の向きから垂直方向に指定した角度方向を変えます。", MessageType.None, true);
                 break;
-            case LookOption.DontLook:
+            case LookOption.FreeChange:
+                GUILayout.Label("Horizontal_Angle");
+                myData.HorizontalAngle = EditorGUILayout.Slider(myData.HorizontalAngle, leftValue, rightValue);
+                GUILayout.Label("Vertical_Angle");
+                myData.VerticalAngle = EditorGUILayout.Slider(myData.VerticalAngle, leftValue, rightValue);
+                EditorGUILayout.HelpBox("垂直、水平方向を同時に指定できます。。", MessageType.None, true);
+                break;
+            case LookOption.DontChange:
+                EditorGUILayout.HelpBox("次の目的地まで方向を変えません。", MessageType.None, true);
+                break;
+            case LookOption.LookAtTarget:
+                bool allowSceneObjects1 = !EditorUtility.IsPersistent(target);
+                myData.LookTarget = (Transform)EditorGUILayout.ObjectField("Route_Object", myData.LookTarget, typeof(Transform), allowSceneObjects1);
+                EditorGUILayout.HelpBox("指定したオブジェクトの方向を見続けます。", MessageType.None, true);
+
                 break;
         }
         EditorGUILayout.Space();
         GUILayout.Label("【Speed】");
         myData.NextMoveSpeed = EditorGUILayout.FloatField("Move_Speed", myData.NextMoveSpeed);
+        EditorGUILayout.HelpBox("次の目的地までの間、移動速度を指定します。" + "\r\n" + "0の場合は、デフォルトの値が適応されます。", MessageType.None, true);
         myData.NextLookSpeed = EditorGUILayout.FloatField("Look_Speed", myData.NextLookSpeed);
+        EditorGUILayout.HelpBox("次の目的地までの間、方向転換の速度を指定します。" + "\r\n" + "0の場合は、デフォルトの値が適応されます。", MessageType.None, true);
         EditorGUILayout.Space();
         GUILayout.Label("【Time】");
         myData.StopTime = EditorGUILayout.FloatField("Stop_Time", myData.StopTime);
-        myData.s = (Sample)(EditorGUILayout.ObjectField("obj", myData.s, typeof(Sample)));
-        GUILayout.Label("【Time】");
+        EditorGUILayout.HelpBox("指定した時間、目的地で停止します。", MessageType.None, true);
+        EditorGUILayout.Space();
+        GUILayout.Label("【Route】");
+        bool allowSceneObjects = !EditorUtility.IsPersistent(target);
+        myData.s = (Sample)EditorGUILayout.ObjectField("Route_Object", myData.s, typeof(Sample), allowSceneObjects);
+        EditorGUILayout.HelpBox("ルートを入れた配列をここに指定してください。", MessageType.Info, true);
+
+        for (int i = myData.s.getList().Count - 1; i > 0; i--)
+        {
+            if (myData.s.getList()[i].GetComponent<HandleData>() == myData && i > 0)
+            {
+                GUILayout.Label("【Additional_Features】");
+                if (GUILayout.Button("Go_PreviousTarget"))
+                {
+                    myData.setPotision(myData.s.getList()[i - 1].GetComponent<HandleData>().getPotision());
+                    
+                }
+                EditorGUILayout.HelpBox("前の目的地の座標に移動します。", MessageType.None, true);
+                break;
+            }
+        }
+
+
     }
 
     void OnSceneGUI()
@@ -108,13 +148,16 @@ public class HandleTest : Editor
                             break;
                         case LookOption.LookAtHorizontal:
                             //水平方向に向きを変える
-                            text = "H : " + (data.s.getList()[i].GetComponent<HandleData>().getHorizontalAngle() + 90);
+                            text = "H : " + (data.s.getList()[i].GetComponent<HandleData>().getHorizontalAngle());
                             break;
                         case LookOption.LookAtVertical:
                             //垂直方向に向きを変える
                             text = "V : " + data.s.getList()[i].GetComponent<HandleData>().getVerticalAngle();
                             break;
-                        case LookOption.DontLook:
+                        case LookOption.LookAtTarget:
+                            text = "T";
+                            break;
+                        case LookOption.DontChange:
                             text = "D";
                             break;
                     }

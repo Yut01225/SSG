@@ -7,7 +7,9 @@ public enum LookOption
     NextTarget,//次の目標
     LookAtHorizontal,//左右方向
     LookAtVertical,//上下方向
-    DontLook//カメラが動かない
+    LookAtTarget,//指定オブジェクトの方向
+    FreeChange,//自由変更
+    DontChange//カメラが動かない
 }
 
 public class MoveSample : MonoBehaviour
@@ -66,6 +68,8 @@ public class MoveSample : MonoBehaviour
         }
         //目的地までの差分を計算する
         CalculationDiff(s.getList()[index].transform.position, this.transform.position);
+        //初期のタイマーを取得する
+        this.Timer = s.getList()[oldindex].GetComponent<HandleData>().getStopTime();
     }
 
     void Update()
@@ -173,7 +177,7 @@ public class MoveSample : MonoBehaviour
             }
         }
     }
-    //
+
     void CheckPositions()
     {
         //座標がすべて一致した時
@@ -196,10 +200,29 @@ public class MoveSample : MonoBehaviour
                         CalculationDiff(s.getList()[index].transform.position, this.transform.position);
                         //タイマーをセットする
                         this.Timer = s.getList()[oldindex].GetComponent<HandleData>().getStopTime();
+                        //目的地までのカメラの設定
+                        switch (s.getList()[oldindex].GetComponent<HandleData>().getLookOption())
+                        {
+                            case LookOption.LookAtHorizontal://水平方向に向きを変える
+                                //現在の方向から指定数値を取得する
+                                target = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y + s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                                break;
+                            case LookOption.LookAtVertical://向けたい方向を設定する
+                                //現在の方向から指定数値を取得する
+                                target = Quaternion.Euler(transform.localEulerAngles.x + s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z);
+                                break;
+                            case LookOption.FreeChange:
+                                target = Quaternion.Euler(transform.localEulerAngles.x + s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y + s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     }
+                    //NULLで配列の最後までループした場合
                     if (s.getList().Count - 1 <= i)
                     {
+                        //終了させる
                         index = s.getList().Count;
                     }
                 }
@@ -220,56 +243,24 @@ public class MoveSample : MonoBehaviour
         //目的地の条件を取得
         switch (s.getList()[oldindex].GetComponent<HandleData>().getLookOption())
         {
-            case LookOption.NextTarget:
-                //次の目的地に向きを変える
+            case LookOption.NextTarget://次の目的地に向きを変える
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(s.getList()[index].transform.position - transform.position), lookspeed);
                 break;
-            case LookOption.LookAtHorizontal:
-                //水平方向に向きを変える
-                target = Quaternion.Euler(new Vector3(transform.localEulerAngles.x, s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z));
-                //現在の方向を取得する
-                now_rot = transform.rotation;
-                //角度差が無いか判定
-                if (Quaternion.Angle(now_rot, target) <= 1)
-                {
-                    transform.rotation = target;
-                }
-                else
-                {
-                    if (s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle() > -90)
-                    {
-                        transform.Rotate(new Vector3(0, lookspeed * 100,0));
-                    }
-                    else
-                    {
-                        transform.Rotate(new Vector3(0,-lookspeed * 100, 0));
-                    }
-                }
+            case LookOption.LookAtHorizontal://水平方向に向きを変える
+                target = Quaternion.Euler(transform.localEulerAngles.x, target.eulerAngles.y, transform.localEulerAngles.z);
+                transform.rotation = Quaternion.Slerp(transform.rotation, target, lookspeed);
                 break;
-            case LookOption.LookAtVertical:
-                //向けたい方向を設定する
-                target = Quaternion.Euler(new Vector3(-s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z));
-                //現在の方向を取得する
-                now_rot = transform.rotation;
-                //角度差が無いか判定
-                if (Quaternion.Angle(now_rot, target) <= 1)
-                {
-                    transform.rotation = target;
-                }
-                else
-                {
-                    if (s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle() > 0)
-                    {
-                        transform.Rotate(new Vector3(-lookspeed * 100, 0, 0));
-                    }
-                    else
-                    {
-                        transform.Rotate(new Vector3(lookspeed * 100, 0, 0));
-                    } 
-                }
+            case LookOption.LookAtVertical://向けたい方向を設定する
+            case LookOption.FreeChange://フリーカメラ
+                transform.rotation = Quaternion.Slerp(transform.rotation, target, lookspeed);
                 break;
-            case LookOption.DontLook:
-                //動かさない
+            case LookOption.LookAtTarget://ターゲット追従
+                //相対ベクトルを求める
+                var aim = this.s.getList()[oldindex].GetComponent<HandleData>().getLookTarget().transform.position - this.transform.position;
+                //向きを変える
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aim), lookspeed);
+                break;
+            case LookOption.DontChange://動かさない
                 break;
         }
     }
@@ -324,14 +315,5 @@ public class MoveSample : MonoBehaviour
         }
         //最長距離からかかる時間を求める
         return (Maxdiff / speed);
-    }
-
-    float AngleCorrection(float angle)
-    {
-        while (angle > 180)
-        {
-                angle -= 360;
-        }
-        return angle;
     }
 }

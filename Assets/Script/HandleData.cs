@@ -31,12 +31,19 @@ public class HandleData : MonoBehaviour
     //目標地点で止まる時間
     public float StopTime;
 
+    public Transform LookTarget;
+
     //各種データの更新用
     public void DataUpdate()
     {
         transform.rotation = rot;
         transform.position = pos;
         transform.localScale = scale;
+    }
+
+    public Transform getLookTarget()
+    {
+        return this.LookTarget;
     }
 
     public LookOption getLookOption()
@@ -58,45 +65,22 @@ public class HandleData : MonoBehaviour
     }
     public float getHorizontalAngle()
     {
-        float angle = this.HorizontalAngle;
-        if (angle >= 0)
-        {
-            while (angle > 90)
-            {
-                angle -= 90;
-            }
-        }
-        else
-        {
-            while (angle < -90)
-            {
-                angle += 90;
-            }
-        }
-        return angle - 90;
+        return this.HorizontalAngle;
     }
     public float getVerticalAngle()
     {
-        float angle = this.VerticalAngle;
-        if (angle >= 0)
-        {
-            while (angle > 90)
-            {
-                angle -= 90;
-            }
-        }
-        else
-        {
-            while (angle < -90)
-            {
-                angle += 90;
-            }
-        }
-        return angle;
+        return -this.VerticalAngle;
     }
     public bool getIsStoppingAngleChange()
     {
         return this.StoppingAngleChange;
     }
-
+    public Vector3 getPotision()
+    {
+        return this.transform.localPosition;
+    }
+    public void setPotision(Vector3 newPosition)
+    {
+        this.transform.localPosition = newPosition;
+    }
 }

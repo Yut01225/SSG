@@ -239,6 +239,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &15334945
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -355,6 +356,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &59964914
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -540,6 +542,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &129941058
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -656,6 +659,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &136753850
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -746,18 +750,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbf6c9035a8b5040ae1d1bd82c8e1cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 803.5078, y: 107.9375, z: 875.76025}
+  pos: {x: 803.5078, y: 155.9375, z: 832.76025}
   rot: {x: -0, y: -0, z: -0, w: 1}
   scale: {x: 1, y: 1, z: 1}
   s: {fileID: 1512202258}
   positionView: 1
   StoppingAngleChange: 0
-  NextCameraOption: 0
+  NextCameraOption: 3
   NextMoveSpeed: 0
   NextLookSpeed: 0
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &160560871
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -824,7 +829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160560869}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 311, y: 47, z: 211}
+  m_LocalPosition: {x: 311, y: 95, z: 168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1512202259}
@@ -888,6 +893,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &195254572
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1004,6 +1010,7 @@ MonoBehaviour:
   HorizontalAngle: 90
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &238219645
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1106,6 +1113,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &256378512
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1236,6 +1244,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &309351008
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1352,6 +1361,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &429107080
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1468,6 +1478,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &452423951
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1662,6 +1673,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &458580530
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1778,6 +1790,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &518581348
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1894,6 +1907,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &519540240
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2310,6 +2324,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &586678489
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2686,6 +2701,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &731435898
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2802,6 +2818,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &743780851
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2918,6 +2935,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &826776838
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3034,6 +3052,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &831042545
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3202,6 +3221,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &834917066
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3402,6 +3422,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &866949296
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3518,6 +3539,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &870306533
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3634,6 +3656,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &907365279
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3750,6 +3773,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &933818587
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4329,6 +4353,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1190519186
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4445,6 +4470,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1199851528
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4705,6 +4731,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1315333169
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4821,6 +4848,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1329979524
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4937,6 +4965,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1396976146
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5053,6 +5082,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1494266049
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5169,6 +5199,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1497364834
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5285,6 +5316,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1500952407
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5401,6 +5433,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1507118720
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5661,6 +5694,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1512387919
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5777,6 +5811,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1514577110
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5893,6 +5928,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1548003350
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6009,6 +6045,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1576097975
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6125,6 +6162,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1582573930
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6302,6 +6340,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1613305499
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6418,6 +6457,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1627626005
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6534,6 +6574,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1630439803
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6650,6 +6691,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1655547217
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6766,6 +6808,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1658596960
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7010,6 +7053,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1716914545
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7126,6 +7170,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1728167816
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7303,6 +7348,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1747599372
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7516,6 +7562,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &1793974393
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8048,6 +8095,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &2083366570
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8164,6 +8212,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &2089800956
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8280,6 +8329,7 @@ MonoBehaviour:
   HorizontalAngle: 0
   VerticalAngle: 0
   StopTime: 0
+  LookTarget: {fileID: 0}
 --- !u!135 &2090353337
 SphereCollider:
   m_ObjectHideFlags: 0

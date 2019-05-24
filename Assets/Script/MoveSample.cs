@@ -7,13 +7,15 @@ public enum LookOption
     NextTarget,//次の目標
     LookAtHorizontal,//左右方向
     LookAtVertical,//上下方向
-    DontLook//カメラが動かない
+    LookAtTarget,//指定オブジェクトの方向
+    FreeChange,//自由変更
+    DontChange//カメラが動かない
 }
 
 public class MoveSample : MonoBehaviour
 {
     //ルート配列
-    public Sample s;
+    public RouteSample route;
 
     //各種速度
     public float DefaultMoveSpeed;//移動速度
@@ -36,36 +38,42 @@ public class MoveSample : MonoBehaviour
     //待機用カウントダウンタイマー
     private float Timer = 0;
 
+    //でこぼこを有効
+    public bool IsUneven;
+    public float CorrectionHeight;
+
     void Start()
     {
         //存在するまで繰り返す
-        for (int i = index; i < s.getList().Count; i++)
+        for (int i = index; i < route.getList().Count; i++)
         {
             //リストが存在するか判定
-            if (s.getList()[i])
+            if (route.getList()[i])
             {
                 //リストの一番最初を開始位置にする
                 oldindex = i;
                 //最初のポイントに移動する
-                this.transform.position = s.getList()[oldindex].transform.position;
+                this.transform.position = route.getList()[oldindex].transform.position;
                 break;
             }
         }
         //存在するまで繰り返す
-        for (int i = oldindex + 1; i < s.getList().Count; i++)
+        for (int i = oldindex + 1; i < route.getList().Count; i++)
         {
             //リストが存在するか判定
-            if (s.getList()[i])
+            if (route.getList()[i])
             {
                 //次の目的地に設定する
                 index = i;
                 //瞬時に次の目的地に方向を変える
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(s.getList()[index].transform.position - transform.position), 1f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), 1f);
                 break;
             }
         }
         //目的地までの差分を計算する
-        CalculationDiff(s.getList()[index].transform.position, this.transform.position);
+        CalculationDiff(route.getList()[index].transform.position, this.transform.position);
+        //初期のタイマーを取得する
+        this.Timer = route.getList()[oldindex].GetComponent<HandleData>().getStopTime();
     }
 
     void Update()
@@ -76,7 +84,7 @@ public class MoveSample : MonoBehaviour
             //カウントダウンを行う
             Timer -= Time.deltaTime * 1f;
             //停止中方向転換が有効か判定
-            if (s.getList()[oldindex].GetComponent<HandleData>().getIsStoppingAngleChange())
+            if (route.getList()[oldindex].GetComponent<HandleData>().getIsStoppingAngleChange())
             {
                 //向きを変える
                 ChangeLook();
@@ -85,14 +93,16 @@ public class MoveSample : MonoBehaviour
         else
         {
             //配列が存在するか
-            if (index < s.getList().Count)
+            if (index < route.getList().Count)
             {
                 //向きを変える
                 ChangeLook();
                 //【X座標】
                 X_PositionChange();
+
                 //【Y座標】
                 Y_PositionChange();
+
                 //【Z座標】
                 Z_PositionChange();
                 //【X,Y,Zが目的地に完全一致しているか】
@@ -105,105 +115,137 @@ public class MoveSample : MonoBehaviour
     void X_PositionChange()
     {
         //目標が大きい場合
-        if (s.getList()[index].transform.position.x < this.transform.position.x)
+        if (route.getList()[index].transform.position.x < this.transform.position.x)
         {
             this.transform.position -= new Vector3(diffX * Time.deltaTime, 0, 0);
             //加算後に目標を超えた場合
-            if (s.getList()[index].transform.position.x > this.transform.position.x)
+            if (route.getList()[index].transform.position.x > this.transform.position.x)
             {
-                this.transform.position = new Vector3(s.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
+                this.transform.position = new Vector3(route.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
             }
         }
         //目標が小さい場合
-        if (s.getList()[index].transform.position.x > this.transform.position.x)
+        if (route.getList()[index].transform.position.x > this.transform.position.x)
         {
             this.transform.position += new Vector3(diffX * Time.deltaTime, 0, 0);
             //減算後に目標を超えた場合
-            if (s.getList()[index].transform.position.x < this.transform.position.x)
+            if (route.getList()[index].transform.position.x < this.transform.position.x)
             {
-                this.transform.position = new Vector3(s.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
+                this.transform.position = new Vector3(route.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
             }
         }
     }
     //Y座標を変更する
     void Y_PositionChange()
     {
-        //目標が大きい場合
-        if (s.getList()[index].transform.position.y < this.transform.position.y)
+        if (IsUneven)
         {
-            this.transform.position -= new Vector3(0, diffY * Time.deltaTime, 0);
-            //加算後に目標を超えた場合
-            if (s.getList()[index].transform.position.y > this.transform.position.y)
+           float terrainHeight = Terrain.activeTerrain.terrainData.GetInterpolatedHeight(this.transform.position.x / Terrain.activeTerrain.terrainData.size.x,this.transform.position.z / Terrain.activeTerrain.terrainData.size.z);
+            this.transform.position = new Vector3(this.transform.position.x, terrainHeight + CorrectionHeight, this.transform.position.z);
+        }
+        else
+        {
+            //目標が大きい場合
+            if (route.getList()[index].transform.position.y < this.transform.position.y)
             {
-                this.transform.position = new Vector3(this.transform.position.x, s.getList()[index].transform.position.y, this.transform.position.z);
+                this.transform.position -= new Vector3(0, diffY * Time.deltaTime, 0);
+                //加算後に目標を超えた場合
+                if (route.getList()[index].transform.position.y > this.transform.position.y)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[index].transform.position.y, this.transform.position.z);
+                }
+            }
+            //目標が小さい場合
+            if (route.getList()[index].transform.position.y > this.transform.position.y)
+            {
+                this.transform.position += new Vector3(0, diffY * Time.deltaTime, 0);
+                //減算後に目標を超えた場合
+                if (route.getList()[index].transform.position.y < this.transform.position.y)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[index].transform.position.y, this.transform.position.z);
+                }
             }
         }
-        //目標が小さい場合
-        if (s.getList()[index].transform.position.y > this.transform.position.y)
-        {
-            this.transform.position += new Vector3(0, diffY * Time.deltaTime, 0);
-            //減算後に目標を超えた場合
-            if (s.getList()[index].transform.position.y < this.transform.position.y)
-            {
-                this.transform.position = new Vector3(this.transform.position.x, s.getList()[index].transform.position.y, this.transform.position.z);
-            }
-        }
+
     }
     //Z座標を変更する
     void Z_PositionChange()
     {
         //目標が大きい場合
-        if (s.getList()[index].transform.position.z < this.transform.position.z)
+        if (route.getList()[index].transform.position.z < this.transform.position.z)
         {
             this.transform.position -= new Vector3(0, 0, diffZ * Time.deltaTime);
             //加算後に目標を超えた場合
-            if (s.getList()[index].transform.position.z > this.transform.position.z)
+            if (route.getList()[index].transform.position.z > this.transform.position.z)
             {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, s.getList()[index].transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[index].transform.position.z);
             }
         }
         //目標が小さい場合
-        if (s.getList()[index].transform.position.z > this.transform.position.z)
+        if (route.getList()[index].transform.position.z > this.transform.position.z)
         {
             this.transform.position += new Vector3(0, 0, diffZ * Time.deltaTime);
             //減算後に目標を超えた場合
-            if (s.getList()[index].transform.position.z < this.transform.position.z)
+            if (route.getList()[index].transform.position.z < this.transform.position.z)
             {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, s.getList()[index].transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[index].transform.position.z);
             }
         }
     }
-    //
+
     void CheckPositions()
     {
         //座標がすべて一致した時
-        if (s.getList()[index].transform.position.x == this.transform.position.x && s.getList()[index].transform.position.y == this.transform.position.y && s.getList()[index].transform.position.z == this.transform.position.z)
+        if (route.getList()[index].transform.position.x == this.transform.position.x && route.getList()[index].transform.position.z == this.transform.position.z)
         {
-            //現在地を保存する
-            oldindex = index;
-            //リストの最後でない場合
-            if (++index < s.getList().Count)
+            if (route.getList()[index].transform.position.y == this.transform.position.y || IsUneven)
             {
-                //存在するまで繰り返す
-                for (int i = index; i < s.getList().Count; i++)
+                //現在地を保存する
+                oldindex = index;
+                //リストの最後でない場合
+                if (++index < route.getList().Count)
                 {
-                    //リストが存在するか判定
-                    if (s.getList()[i])
+                    //存在するまで繰り返す
+                    for (int i = index; i < route.getList().Count; i++)
                     {
-                        //存在しているので次の目的地をその場所まで飛ばす
-                        index = i;
-                        //目的地までの差分を計算する
-                        CalculationDiff(s.getList()[index].transform.position, this.transform.position);
-                        //タイマーをセットする
-                        this.Timer = s.getList()[oldindex].GetComponent<HandleData>().getStopTime();
-                        break;
-                    }
-                    if (s.getList().Count - 1 <= i)
-                    {
-                        index = s.getList().Count;
+                        //リストが存在するか判定
+                        if (route.getList()[i])
+                        {
+                            //存在しているので次の目的地をその場所まで飛ばす
+                            index = i;
+                            //目的地までの差分を計算する
+                            CalculationDiff(route.getList()[index].transform.position, this.transform.position);
+                            //タイマーをセットする
+                            this.Timer = route.getList()[oldindex].GetComponent<HandleData>().getStopTime();
+                            //目的地までのカメラの設定
+                            switch (route.getList()[oldindex].GetComponent<HandleData>().getLookOption())
+                            {
+                                case LookOption.LookAtHorizontal://水平方向に向きを変える
+                                                                 //現在の方向から指定数値を取得する
+                                    target = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y + route.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                                    break;
+                                case LookOption.LookAtVertical://向けたい方向を設定する
+                                                               //現在の方向から指定数値を取得する
+                                    target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z);
+                                    break;
+                                case LookOption.FreeChange:
+                                    target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y + route.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        }
+                        //NULLで配列の最後までループした場合
+                        if (route.getList().Count - 1 <= i)
+                        {
+                            //終了させる
+                            index = route.getList().Count;
+                        }
                     }
                 }
             }
+
         }
     }
 
@@ -211,65 +253,33 @@ public class MoveSample : MonoBehaviour
     void ChangeLook()
     {
         //目的値から振り向き速度を取得
-        float lookspeed = (s.getList()[oldindex].GetComponent<HandleData>().getLookSpeed() / 1000);
+        float lookspeed = (route.getList()[oldindex].GetComponent<HandleData>().getLookSpeed() / 1000);
         if (lookspeed <= 0)//設定していない場合
         {
             //距離に応じた速度を設定
-            lookspeed = 0.1f / CalculationTime(s.getList()[index].transform.position, transform.position);
+            lookspeed = 0.1f / CalculationTime(route.getList()[index].transform.position, transform.position);
         }
         //目的地の条件を取得
-        switch (s.getList()[oldindex].GetComponent<HandleData>().getLookOption())
+        switch (route.getList()[oldindex].GetComponent<HandleData>().getLookOption())
         {
-            case LookOption.NextTarget:
-                //次の目的地に向きを変える
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(s.getList()[index].transform.position - transform.position), lookspeed);
+            case LookOption.NextTarget://次の目的地に向きを変える
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
                 break;
-            case LookOption.LookAtHorizontal:
-                //水平方向に向きを変える
-                target = Quaternion.Euler(new Vector3(transform.localEulerAngles.x, s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z));
-                //現在の方向を取得する
-                now_rot = transform.rotation;
-                //角度差が無いか判定
-                if (Quaternion.Angle(now_rot, target) <= 1)
-                {
-                    transform.rotation = target;
-                }
-                else
-                {
-                    if (s.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle() > -90)
-                    {
-                        transform.Rotate(new Vector3(0, lookspeed * 100,0));
-                    }
-                    else
-                    {
-                        transform.Rotate(new Vector3(0,-lookspeed * 100, 0));
-                    }
-                }
+            case LookOption.LookAtHorizontal://水平方向に向きを変える
+                target = Quaternion.Euler(transform.localEulerAngles.x, target.eulerAngles.y, transform.localEulerAngles.z);
+                transform.rotation = Quaternion.Slerp(transform.rotation, target, lookspeed);
                 break;
-            case LookOption.LookAtVertical:
-                //向けたい方向を設定する
-                target = Quaternion.Euler(new Vector3(-s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z));
-                //現在の方向を取得する
-                now_rot = transform.rotation;
-                //角度差が無いか判定
-                if (Quaternion.Angle(now_rot, target) <= 1)
-                {
-                    transform.rotation = target;
-                }
-                else
-                {
-                    if (s.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle() > 0)
-                    {
-                        transform.Rotate(new Vector3(-lookspeed * 100, 0, 0));
-                    }
-                    else
-                    {
-                        transform.Rotate(new Vector3(lookspeed * 100, 0, 0));
-                    } 
-                }
+            case LookOption.LookAtVertical://向けたい方向を設定する
+            case LookOption.FreeChange://フリーカメラ
+                transform.rotation = Quaternion.Slerp(transform.rotation, target, lookspeed);
                 break;
-            case LookOption.DontLook:
-                //動かさない
+            case LookOption.LookAtTarget://ターゲット追従
+                //相対ベクトルを求める
+                var aim = this.route.getList()[oldindex].GetComponent<HandleData>().getLookTarget().transform.position - this.transform.position;
+                //向きを変える
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aim), lookspeed);
+                break;
+            case LookOption.DontChange://動かさない
                 break;
         }
     }
@@ -303,7 +313,7 @@ public class MoveSample : MonoBehaviour
     float CalculationTime(Vector3 StartVector, Vector3 EndVector)
     {
         //移動速度を目標ポイントから取得する
-        float speed = s.getList()[oldindex].GetComponent<HandleData>().getMoveSpeed();
+        float speed = route.getList()[oldindex].GetComponent<HandleData>().getMoveSpeed();
         //移動速度が設定されていない
         if (speed <= 0)
         {
@@ -324,14 +334,5 @@ public class MoveSample : MonoBehaviour
         }
         //最長距離からかかる時間を求める
         return (Maxdiff / speed);
-    }
-
-    float AngleCorrection(float angle)
-    {
-        while (angle > 180)
-        {
-                angle -= 360;
-        }
-        return angle;
     }
 }

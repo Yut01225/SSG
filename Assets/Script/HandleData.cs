@@ -11,9 +11,10 @@ public class HandleData : MonoBehaviour
     public Vector3 scale = Vector3.one;
 
     //【Edit用変数】
-    public Sample s;//ルート配列
+    public RouteSample route;//ルート配列
     public bool positionView;//座標表示
     public bool StoppingAngleChange;//停止中方向転換するか
+    public bool AutoHeight;//自動で高さを変更する
 
     //カメラの動かし方
     public LookOption NextCameraOption;
@@ -31,12 +32,22 @@ public class HandleData : MonoBehaviour
     //目標地点で止まる時間
     public float StopTime;
 
+    public Transform LookTarget;
+
+    //補正用高さ
+    public float CorrectionHeight;
+
     //各種データの更新用
     public void DataUpdate()
     {
         transform.rotation = rot;
         transform.position = pos;
         transform.localScale = scale;
+    }
+
+    public Transform getLookTarget()
+    {
+        return this.LookTarget;
     }
 
     public LookOption getLookOption()
@@ -58,45 +69,29 @@ public class HandleData : MonoBehaviour
     }
     public float getHorizontalAngle()
     {
-        float angle = this.HorizontalAngle;
-        if (angle >= 0)
-        {
-            while (angle > 90)
-            {
-                angle -= 90;
-            }
-        }
-        else
-        {
-            while (angle < -90)
-            {
-                angle += 90;
-            }
-        }
-        return angle - 90;
+        return this.HorizontalAngle;
     }
     public float getVerticalAngle()
     {
-        float angle = this.VerticalAngle;
-        if (angle >= 0)
-        {
-            while (angle > 90)
-            {
-                angle -= 90;
-            }
-        }
-        else
-        {
-            while (angle < -90)
-            {
-                angle += 90;
-            }
-        }
-        return angle;
+        return -this.VerticalAngle;
     }
     public bool getIsStoppingAngleChange()
     {
         return this.StoppingAngleChange;
     }
+    public Vector3 getPotision()
+    {
+        return this.transform.localPosition;
+    }
 
+    public float getTerrainHigh(float posx, float posz)
+    {
+        return Terrain.activeTerrain.terrainData.GetInterpolatedHeight(
+     posx / Terrain.activeTerrain.terrainData.size.x,
+     posz / Terrain.activeTerrain.terrainData.size.z);
+    }
+    public void setPotision(Vector3 newPosition)
+    {
+        this.transform.localPosition = newPosition;
+    }
 }

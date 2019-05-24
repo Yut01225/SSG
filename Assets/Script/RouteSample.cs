@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sample : MonoBehaviour
+public class RouteSample : MonoBehaviour
 {
     [SerializeField]
     List<GameObject> tl = null;

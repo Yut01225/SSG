@@ -19,6 +19,8 @@ public class HandleTest : Editor
     SerializedProperty LookTarget;
     SerializedProperty AutoHeight;
     SerializedProperty CorrectionHeight;
+    SerializedProperty UnevenFlag;
+    SerializedProperty UnevenHeight;
 
     void OnEnable()
     {
@@ -35,6 +37,8 @@ public class HandleTest : Editor
         LookTarget = serializedObject.FindProperty("LookTarget");
         AutoHeight = serializedObject.FindProperty("AutoHeight");
         CorrectionHeight = serializedObject.FindProperty("CorrectionHeight");
+        UnevenFlag = serializedObject.FindProperty("UnevenFlag");
+        UnevenHeight = serializedObject.FindProperty("UnevenHeight");
     }
 
     public override void OnInspectorGUI()
@@ -44,6 +48,7 @@ public class HandleTest : Editor
 
         //　targetでデータを取得しキャスト
         HandleData myData = (HandleData)target;
+        //配列を設定しているか判定
         if (myData.route)
         {
             GUILayout.Label("【Edit_Option】");
@@ -85,8 +90,12 @@ public class HandleTest : Editor
                     break;
                 case LookOption.LookAtTarget:
                     bool allowSceneObjects1 = !EditorUtility.IsPersistent(target);
-                    myData.LookTarget = (Transform)EditorGUILayout.ObjectField("Route_Object", myData.LookTarget, typeof(Transform), allowSceneObjects1);
+                    myData.LookTarget = (Transform)EditorGUILayout.ObjectField("Target_Object", myData.LookTarget, typeof(Transform), allowSceneObjects1);
                     EditorGUILayout.HelpBox("指定したオブジェクトの方向を見続けます。", MessageType.None, true);
+                    if (!myData.LookTarget)
+                    {
+                        EditorGUILayout.HelpBox("オブジェクトが設定されていません。", MessageType.Warning, true);
+                    }
 
                     break;
             }
@@ -105,33 +114,48 @@ public class HandleTest : Editor
             bool allowSceneObjects = !EditorUtility.IsPersistent(target);
             myData.route = (RouteSample)EditorGUILayout.ObjectField("Route_Object", myData.route, typeof(RouteSample), allowSceneObjects);
 
-            for (int i = myData.route.getList().Count - 1; i > 0; i--)
+            //エラー対策用配列チェック
+            if (myData.route)
             {
-                if (myData.route.getList()[i].GetComponent<HandleData>() == myData && i > 0)
+                for (int i = myData.route.getList().Count - 1; i > 0; i--)
                 {
-                    GUILayout.Label("【Additional_Features】");
-                    if (GUILayout.Button("Go_PreviousTarget"))
+                    if (myData.route.getList()[i] && myData.route.getList()[i].GetComponent<HandleData>() == myData && i > 0)
                     {
-                        myData.setPotision(myData.route.getList()[i - 1].GetComponent<HandleData>().getPotision());
+                        GUILayout.Label("【Additional_Features】");
+                        if (GUILayout.Button("Go_PreviousTarget"))
+                        {
+                            myData.setPotision(myData.route.getList()[i - 1].GetComponent<HandleData>().getPotision());
 
+                        }
+                        EditorGUILayout.HelpBox("前の目的地の座標に移動します。", MessageType.None, true);
+                        break;
                     }
-                    EditorGUILayout.HelpBox("前の目的地の座標に移動します。", MessageType.None, true);
-                    break;
                 }
             }
-            myData.AutoHeight = EditorGUILayout.ToggleLeft("Auto_Height", myData.AutoHeight);
-            if (myData.AutoHeight)
+            //Terrainが存在しているか判定
+            if (Terrain.activeTerrain)
             {
-                myData.CorrectionHeight = EditorGUILayout.FloatField("Correction_Height", myData.CorrectionHeight);
-                myData.setPotision(new Vector3(myData.pos.x, myData.getTerrainHigh(myData.pos.x, myData.pos.z) + myData.CorrectionHeight, myData.pos.z));
-                EditorGUILayout.HelpBox("補正値で高さを調整することもできます。", MessageType.None, true);
+                myData.AutoHeight = EditorGUILayout.ToggleLeft("Auto_Height", myData.AutoHeight);
+                if (myData.AutoHeight)
+                {
+                    myData.CorrectionHeight = EditorGUILayout.FloatField("Correction_Height", myData.CorrectionHeight);
+                    myData.setPotision(new Vector3(myData.pos.x, myData.getTerrainHigh(myData.pos.x, myData.pos.z) + myData.CorrectionHeight, myData.pos.z));
+                    EditorGUILayout.HelpBox("補正値で高さを調整することもできます。", MessageType.None, true);
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox("有効にすると、Terrainから高さを取得します。", MessageType.None, true);
+                }
+                myData.UnevenFlag = EditorGUILayout.ToggleLeft("Uneven_Flag", myData.UnevenFlag);
+                if (myData.UnevenFlag)
+                {
+                    myData.UnevenHeight = EditorGUILayout.FloatField("UnevenHeight", myData.UnevenHeight);
+                }
+
             }
-            else
-            {
-                EditorGUILayout.HelpBox("有効にすると、Terrainから高さを取得します。", MessageType.None, true);
-            }
+
         }
-        else
+        else//配列が存在しない場合
         {
             GUILayout.Label("【Route】");
             bool allowSceneObjects = !EditorUtility.IsPersistent(target);
@@ -149,8 +173,7 @@ public class HandleTest : Editor
 
         //配列オブジェクトが存在するか
         if (data.route)
-        {
-            //線の色を指定
+        {//線の色を指定
             Handles.color = new Color(1f, 1f, 0f, 1f);
             //座標配列の初期設定
             Vector3[] points = new Vector3[data.route.getList().Count];
@@ -179,10 +202,14 @@ public class HandleTest : Editor
                         case LookOption.LookAtTarget:
                             text = "T";
                             break;
+                        case LookOption.FreeChange:
+                            text = "FH: " + (data.route.getList()[i].GetComponent<HandleData>().getHorizontalAngle()) + "\r\n" + "FV: " + data.route.getList()[i].GetComponent<HandleData>().getVerticalAngle();
+                            break;
                         case LookOption.DontChange:
                             text = "D";
                             break;
                     }
+                    //オブジェクトより少し上に表示
                     Handles.Label((data.route.getList()[i].transform.position + new Vector3(0f, 2.5f, 0f)), text);
 
                     //タイマーを設定している
@@ -218,30 +245,34 @@ public class HandleTest : Editor
             Handles.DrawAAPolyLine(5f, points);
         }
 
+        //選択ツールを無効にする
         Tools.current = Tool.None;
-        var transform = data.transform;
-
-        transform.position = PositionHandle(data.AutoHeight, transform, data.getTerrainHigh(data.pos.x, data.pos.z) + data.CorrectionHeight);
+        data.transform.position = PositionHandle(data.AutoHeight, data.transform, data.getTerrainHigh(data.pos.x, data.pos.z) + data.CorrectionHeight);
     }
 
-    Vector3 PositionHandle(bool isUneven, Transform transform,float yh)
+    //3点アローの設定
+    Vector3 PositionHandle(bool isUneven, Transform transform, float yh)
     {
+        //選択された座標からPositionを取得
         var position = transform.position;
-        
-        
+
+        //凸凹が有効の場合
         if (isUneven)
         {
+            //選択された座標を外部のy座標に変更
             position.y = yh;
         }
-        else
+        else//凸凹ではない場合
         {
+            //ハンドルから取得
             Handles.color = Handles.yAxisColor;
-            position = Handles.Slider(position, transform.up); //Y 軸
+            position = Handles.Slider(position, transform.up);
         }
+        //その他のハンドル設定
         Handles.color = Handles.xAxisColor;
-        position = Handles.Slider(position, transform.right); //X 軸
+        position = Handles.Slider(position, transform.right);
         Handles.color = Handles.zAxisColor;
-        position = Handles.Slider(position, transform.forward); //Z 軸
+        position = Handles.Slider(position, transform.forward);
 
         return position;
     }

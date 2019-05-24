@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-
 public class HandleData : MonoBehaviour
 {
     //オブジェクトの各種データ
@@ -36,6 +34,12 @@ public class HandleData : MonoBehaviour
 
     //補正用高さ
     public float CorrectionHeight;
+
+    //補正用
+    public bool UnevenFlag;
+
+    //補正用高さ
+    public float UnevenHeight;
 
     //各種データの更新用
     public void DataUpdate()
@@ -86,9 +90,18 @@ public class HandleData : MonoBehaviour
 
     public float getTerrainHigh(float posx, float posz)
     {
-        return Terrain.activeTerrain.terrainData.GetInterpolatedHeight(
-     posx / Terrain.activeTerrain.terrainData.size.x,
-     posz / Terrain.activeTerrain.terrainData.size.z);
+        if (Terrain.activeTerrain)
+        {
+            return Terrain.activeTerrain.terrainData.GetInterpolatedHeight(
+         posx / Terrain.activeTerrain.terrainData.size.x,
+         posz / Terrain.activeTerrain.terrainData.size.z);
+        }
+        else
+        {
+            return 0;
+        }
+
+
     }
     public void setPotision(Vector3 newPosition)
     {

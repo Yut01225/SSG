@@ -107,9 +107,18 @@ public class MoveSample : MonoBehaviour
                 //向きを変える
                 ChangeLook();
 
+
+
                 if (route.getList()[index - 1].GetComponent<HandleData>().BezierFlag)
                 {
-                    t += Time.deltaTime * 0.5f;
+                    float speed = route.getList()[oldindex].GetComponent<HandleData>().getMoveSpeed();
+                    if (speed <= 0)
+                    {
+                        speed = DefaultMoveSpeed;
+                    }
+                    t += Time.deltaTime * (speed / 200);
+
+
                     Vector3 targetposition = GetPoint(route.getList()[index - 1].transform.localPosition, route.getList()[index].transform.localPosition, route.getList()[index + 1].transform.localPosition, t);
                     if (route.getList()[oldindex].GetComponent<HandleData>().UnevenFlag)
                     {
@@ -272,17 +281,17 @@ public class MoveSample : MonoBehaviour
         }
         else
         {
-        //座標のX.Y座標が一致した
-        if (route.getList()[index].transform.position.x == this.transform.position.x && route.getList()[index].transform.position.z == this.transform.position.z)
-        {
-            if (route.getList()[index].transform.position.y == this.transform.position.y || IsUneven)
+            //座標のX.Y座標が一致した
+            if (route.getList()[index].transform.position.x == this.transform.position.x && route.getList()[index].transform.position.z == this.transform.position.z)
             {
-                return true;
+                if (route.getList()[index].transform.position.y == this.transform.position.y || IsUneven)
+                {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-        }
-        
+
     }
     /// <summary>
     /// 次の目的地に座標を変更する
@@ -301,7 +310,7 @@ public class MoveSample : MonoBehaviour
             //現在地を保存する
             oldindex = index;
         }
-            
+
         //リストの最後でない場合
         if (++index < route.getList().Count)
         {
@@ -378,8 +387,8 @@ public class MoveSample : MonoBehaviour
                         else
                         {
                             Vector3 UnevenPosition = route.getList()[index].transform.position - transform.position;
-                        UnevenPosition.y = 0;
-                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(UnevenPosition), lookspeed);
+                            UnevenPosition.y = 0;
+                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(UnevenPosition), lookspeed);
                         }
                     }
                     else
@@ -410,7 +419,7 @@ public class MoveSample : MonoBehaviour
                     }
                     else
                     {
-                       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
                     }
                 }
                 break;

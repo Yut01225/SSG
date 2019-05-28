@@ -96,16 +96,16 @@ public class Route : ScriptableWizard
                     }
                     GUILayout.Box("", GUILayout.Width(this.position.width), GUILayout.Height(1));
 
-                    IsChange[6] = EditorGUILayout.ToggleLeft("凹凸カメラの変更", IsChange[6]);
+                    IsChange[6] = EditorGUILayout.ToggleLeft("地面追従移動", IsChange[6]);
                     if (IsChange[6])
                     {
-                        UnevenFlag = (DropListMenu)EditorGUILayout.EnumPopup("凹凸カメラを有効にする", (DropListMenu)UnevenFlag);
+                        UnevenFlag = (DropListMenu)EditorGUILayout.EnumPopup("地面追従移動を有効にする", (DropListMenu)UnevenFlag);
                     }
                     GUILayout.Box("", GUILayout.Width(this.position.width), GUILayout.Height(1));
-                    IsChange[7] = EditorGUILayout.ToggleLeft("高さ補正を変更する", IsChange[7]);
+                    IsChange[7] = EditorGUILayout.ToggleLeft("地面追従高さ補正を変更する", IsChange[7]);
                     if (IsChange[7])
                     {
-                        UnevenHeight = EditorGUILayout.FloatField("補正高さの値", UnevenHeight);
+                        UnevenHeight = EditorGUILayout.FloatField("地面追従高さ補正の値", UnevenHeight);
                     }
                     GUILayout.Box("", GUILayout.Width(this.position.width), GUILayout.Height(1));
                 }
@@ -153,10 +153,12 @@ public class Route : ScriptableWizard
     //　ウィザードの作成ボタンを押した時に実行
     void OnWizardCreate()
     {
+        int count = 0;
         if (routesample && routesample.getList().Count > 0)
         {
             foreach (GameObject obj in routesample.getList())
             {
+                //存在したら
                 if (obj)
                 {
                     obj.GetComponent<HandleData>().route = routesample;
@@ -189,12 +191,41 @@ public class Route : ScriptableWizard
                         obj.GetComponent<HandleData>().UnevenHeight = UnevenHeight;
                     }
                 }
-
+                count++;
             }
         }
         else
         {
             Debug.Log("経路オブジェクトが選択されていません！");
+        }
+
+        if (IsChange[1] && Terrain.activeTerrain)
+        {
+            Debug.Log(count + "個の目的地の高さ自動調整を変更しました！");
+        }
+        if (IsChange[2] && Terrain.activeTerrain)
+        {
+            Debug.Log(count + "個の目的地の高さ自動調整の補正値を変更しました！");
+        }
+        if (IsChange[3])
+        {
+            Debug.Log(count + "個の目的地の停止時間を変更しました！");
+        }
+        if (IsChange[4])
+        {
+            Debug.Log(count + "個の目的地の座標表示を変更しました！");
+        }
+        if (IsChange[5])
+        {
+            Debug.Log(count + "個の目的地の停止中のアングル表示を変更しました！");
+        }
+        if (IsChange[6] && Terrain.activeTerrain)
+        {
+            Debug.Log(count + "個の目的地の地面追従を変更しました！");
+        }
+        if (IsChange[7] && Terrain.activeTerrain)
+        {
+            Debug.Log(count + "個の目的地の地面追従補正を変更しました！");
         }
 
     }

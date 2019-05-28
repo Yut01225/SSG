@@ -37,6 +37,7 @@ public class MoveSample : MonoBehaviour
 
     //待機用カウントダウンタイマー
     private float Timer = 0;
+    float t = 0;
 
     //でこぼこを有効
     public bool IsUneven;
@@ -102,12 +103,32 @@ public class MoveSample : MonoBehaviour
             //配列が存在するか
             if (index < route.getList().Count)
             {
+
                 //向きを変える
                 ChangeLook();
-                //各座標を更新
-                X_PositionChange();
-                Y_PositionChange();
-                Z_PositionChange();
+
+                if (route.getList()[index - 1].GetComponent<HandleData>().BezierFlag)
+                {
+                    t += Time.deltaTime * 0.5f;
+                    Vector3 targetposition = GetPoint(route.getList()[index - 1].transform.localPosition, route.getList()[index].transform.localPosition, route.getList()[index + 1].transform.localPosition, t);
+                    if (route.getList()[oldindex].GetComponent<HandleData>().UnevenFlag)
+                    {
+                        if (IsUneven && Terrain.activeTerrain)
+                        {
+                            float terrainHeight = Terrain.activeTerrain.terrainData.GetInterpolatedHeight(this.transform.position.x / Terrain.activeTerrain.terrainData.size.x, this.transform.position.z / Terrain.activeTerrain.terrainData.size.z);
+                            targetposition = new Vector3(targetposition.x, terrainHeight + CorrectionHeight, targetposition.z);
+                        }
+                    }
+                    transform.position = targetposition;
+                }
+                else
+                {
+                    //各座標を更新
+                    X_PositionChange();
+                    Y_PositionChange();
+                    Z_PositionChange();
+                }
+
 
                 //目標の座標に到達しているか
                 if (CheckPositions())
@@ -117,6 +138,14 @@ public class MoveSample : MonoBehaviour
                 }
             }
         }
+    }
+
+    Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+        var a = Vector3.Lerp(p0, p1, t); // 緑色の点1
+        var b = Vector3.Lerp(p1, p2, t); // 緑色の点2
+
+        return Vector3.Lerp(a, b, t);   // 青色の点1
     }
 
     /// <summary>
@@ -229,6 +258,20 @@ public class MoveSample : MonoBehaviour
     /// <returns>到達している場合True</returns>
     bool CheckPositions()
     {
+        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+        {
+            //座標のX.Y座標が一致した
+            if (route.getList()[index + 1].transform.position.x == this.transform.position.x && route.getList()[index + 1].transform.position.z == this.transform.position.z)
+            {
+                if (route.getList()[index + 1].transform.position.y == this.transform.position.y || IsUneven)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
         //座標のX.Y座標が一致した
         if (route.getList()[index].transform.position.x == this.transform.position.x && route.getList()[index].transform.position.z == this.transform.position.z)
         {
@@ -238,14 +281,27 @@ public class MoveSample : MonoBehaviour
             }
         }
         return false;
+        }
+        
     }
     /// <summary>
     /// 次の目的地に座標を変更する
     /// </summary>
     void changeNextTarget()
     {
-        //現在地を保存する
-        oldindex = index;
+        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+        {
+            //現在地を保存する
+            oldindex = index + 1;
+            index++;
+            t = 0;
+        }
+        else
+        {
+            //現在地を保存する
+            oldindex = index;
+        }
+            
         //リストの最後でない場合
         if (++index < route.getList().Count)
         {
@@ -310,18 +366,52 @@ public class MoveSample : MonoBehaviour
                 {
                     if (IsUneven)
                     {
-                        Vector3 UnevenPosition = route.getList()[index].transform.position - transform.position;
+                        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                        {
+                            Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                            targetLookRotation.y = 0f;
+                            if (targetLookRotation != Vector3.zero)
+                            {
+                                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetLookRotation), lookspeed);
+                            }
+                        }
+                        else
+                        {
+                            Vector3 UnevenPosition = route.getList()[index].transform.position - transform.position;
                         UnevenPosition.y = 0;
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(UnevenPosition), lookspeed);
+                        }
                     }
                     else
                     {
-                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                        {
+                            Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                            if (targetLookRotation != Vector3.zero)
+                            {
+                                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetLookRotation), lookspeed);
+                            }
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                        }
                     }
                 }
                 else
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                    if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                    {
+                        Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                        if (targetLookRotation != Vector3.zero)
+                        {
+                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetLookRotation), lookspeed);
+                        }
+                    }
+                    else
+                    {
+                       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                    }
                 }
                 break;
             case LookOption.LookAtHorizontal://水平方向に向きを変える

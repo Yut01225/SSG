@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HandleData : MonoBehaviour
 {
+    public static bool Hint;
+
     //オブジェクトの各種データ
     public Vector3 pos = Vector3.zero;
     public Quaternion rot = Quaternion.identity;
@@ -40,6 +43,19 @@ public class HandleData : MonoBehaviour
 
     //補正用高さ
     public float UnevenHeight;
+
+    //ベジェ曲線
+    public bool BezierFlag;
+
+    public bool getHint()
+    {
+        return Hint;
+    }
+
+    public void setHint(bool hint)
+    {
+        Hint = hint;
+    }
 
     //各種データの更新用
     public void DataUpdate()

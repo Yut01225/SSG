@@ -30,11 +30,6 @@ public class MoveSample : MonoBehaviour
     //向きたい方向情報
     private Quaternion target;
 
-    //次の目的地
-    public int index = 0;
-    //現在の場所
-    private int oldindex = -1;
-
     //待機用カウントダウンタイマー
     private float Timer = 0;
     float t = 0;
@@ -43,43 +38,46 @@ public class MoveSample : MonoBehaviour
     public bool IsUneven;
     public float CorrectionHeight;
 
+    public int index;
+
     void Start()
     {
+        MoveStatus.NextIndex = index;
         //存在するまで繰り返す
-        for (int i = index; i < route.getList().Count; i++)
+        for (int i = MoveStatus.NextIndex; i < route.getList().Count; i++)
         {
             //リストが存在するか判定
             if (route.getList()[i])
             {
                 //リストの一番最初を開始位置にする
-                oldindex = i;
+                MoveStatus.OldIndex = i;
                 //最初のポイントに移動する
-                this.transform.position = route.getList()[oldindex].transform.position;
+                this.transform.position = route.getList()[MoveStatus.OldIndex].transform.position;
                 break;
             }
         }
         ChengeUneven();
         //存在するまで繰り返す
-        for (int i = oldindex + 1; i < route.getList().Count; i++)
+        for (int i = MoveStatus.OldIndex + 1; i < route.getList().Count; i++)
         {
             //リストが存在するか判定
             if (route.getList()[i])
             {
                 //次の目的地に設定する
-                index = i;
+                MoveStatus.NextIndex = i;
                 if (!IsUneven)
                 {
                     //瞬時に次の目的地に方向を変える
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), 1f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[MoveStatus.NextIndex].transform.position - transform.position), 1f);
                 }
 
                 break;
             }
         }
         //目的地までの差分を計算する
-        CalculationDiff(route.getList()[index].transform.position, this.transform.position);
+        CalculationDiff(route.getList()[MoveStatus.NextIndex].transform.position, this.transform.position);
         //初期のタイマーを取得する
-        this.Timer = route.getList()[oldindex].GetComponent<HandleData>().getStopTime();
+        this.Timer = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getStopTime();
 
 
     }
@@ -92,7 +90,7 @@ public class MoveSample : MonoBehaviour
             //カウントダウンを行う
             Timer -= Time.deltaTime * 1f;
             //停止中方向転換が有効か判定
-            if (route.getList()[oldindex].GetComponent<HandleData>().getIsStoppingAngleChange())
+            if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getIsStoppingAngleChange())
             {
                 //向きを変える
                 ChangeLook();
@@ -101,7 +99,7 @@ public class MoveSample : MonoBehaviour
         else
         {
             //配列が存在するか
-            if (index < route.getList().Count)
+            if (MoveStatus.NextIndex < route.getList().Count)
             {
 
                 //向きを変える
@@ -109,9 +107,9 @@ public class MoveSample : MonoBehaviour
 
 
 
-                if (route.getList()[index - 1].GetComponent<HandleData>().BezierFlag)
+                if (route.getList()[MoveStatus.NextIndex - 1].GetComponent<HandleData>().BezierFlag)
                 {
-                    float speed = route.getList()[oldindex].GetComponent<HandleData>().getMoveSpeed();
+                    float speed = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getMoveSpeed();
                     if (speed <= 0)
                     {
                         speed = DefaultMoveSpeed;
@@ -119,8 +117,8 @@ public class MoveSample : MonoBehaviour
                     t += Time.deltaTime * (speed / 200);
 
 
-                    Vector3 targetposition = GetPoint(route.getList()[index - 1].transform.localPosition, route.getList()[index].transform.localPosition, route.getList()[index + 1].transform.localPosition, t);
-                    if (route.getList()[oldindex].GetComponent<HandleData>().UnevenFlag)
+                    Vector3 targetposition = GetPoint(route.getList()[MoveStatus.NextIndex - 1].transform.localPosition, route.getList()[MoveStatus.NextIndex].transform.localPosition, route.getList()[MoveStatus.NextIndex + 1].transform.localPosition, t);
+                    if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().UnevenFlag)
                     {
                         if (IsUneven && Terrain.activeTerrain)
                         {
@@ -163,23 +161,23 @@ public class MoveSample : MonoBehaviour
     void X_PositionChange()
     {
         //目標が大きい場合
-        if (route.getList()[index].transform.position.x < this.transform.position.x)
+        if (route.getList()[MoveStatus.NextIndex].transform.position.x < this.transform.position.x)
         {
             this.transform.position -= new Vector3(diffX * Time.deltaTime, 0, 0);
             //加算後に目標を超えた場合
-            if (route.getList()[index].transform.position.x > this.transform.position.x)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.x > this.transform.position.x)
             {
-                this.transform.position = new Vector3(route.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
+                this.transform.position = new Vector3(route.getList()[MoveStatus.NextIndex].transform.position.x, this.transform.position.y, this.transform.position.z);
             }
         }
         //目標が小さい場合
-        if (route.getList()[index].transform.position.x > this.transform.position.x)
+        if (route.getList()[MoveStatus.NextIndex].transform.position.x > this.transform.position.x)
         {
             this.transform.position += new Vector3(diffX * Time.deltaTime, 0, 0);
             //減算後に目標を超えた場合
-            if (route.getList()[index].transform.position.x < this.transform.position.x)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.x < this.transform.position.x)
             {
-                this.transform.position = new Vector3(route.getList()[index].transform.position.x, this.transform.position.y, this.transform.position.z);
+                this.transform.position = new Vector3(route.getList()[MoveStatus.NextIndex].transform.position.x, this.transform.position.y, this.transform.position.z);
             }
         }
     }
@@ -196,23 +194,23 @@ public class MoveSample : MonoBehaviour
         else
         {
             //目標が大きい場合
-            if (route.getList()[index].transform.position.y < this.transform.position.y)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.y < this.transform.position.y)
             {
                 this.transform.position -= new Vector3(0, diffY * Time.deltaTime, 0);
                 //加算後に目標を超えた場合
-                if (route.getList()[index].transform.position.y > this.transform.position.y)
+                if (route.getList()[MoveStatus.NextIndex].transform.position.y > this.transform.position.y)
                 {
-                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[index].transform.position.y, this.transform.position.z);
+                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[MoveStatus.NextIndex].transform.position.y, this.transform.position.z);
                 }
             }
             //目標が小さい場合
-            if (route.getList()[index].transform.position.y > this.transform.position.y)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.y > this.transform.position.y)
             {
                 this.transform.position += new Vector3(0, diffY * Time.deltaTime, 0);
                 //減算後に目標を超えた場合
-                if (route.getList()[index].transform.position.y < this.transform.position.y)
+                if (route.getList()[MoveStatus.NextIndex].transform.position.y < this.transform.position.y)
                 {
-                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[index].transform.position.y, this.transform.position.z);
+                    this.transform.position = new Vector3(this.transform.position.x, route.getList()[MoveStatus.NextIndex].transform.position.y, this.transform.position.z);
                 }
             }
         }
@@ -224,23 +222,23 @@ public class MoveSample : MonoBehaviour
     void Z_PositionChange()
     {
         //目標が大きい場合
-        if (route.getList()[index].transform.position.z < this.transform.position.z)
+        if (route.getList()[MoveStatus.NextIndex].transform.position.z < this.transform.position.z)
         {
             this.transform.position -= new Vector3(0, 0, diffZ * Time.deltaTime);
             //加算後に目標を超えた場合
-            if (route.getList()[index].transform.position.z > this.transform.position.z)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.z > this.transform.position.z)
             {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[index].transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[MoveStatus.NextIndex].transform.position.z);
             }
         }
         //目標が小さい場合
-        if (route.getList()[index].transform.position.z > this.transform.position.z)
+        if (route.getList()[MoveStatus.NextIndex].transform.position.z > this.transform.position.z)
         {
             this.transform.position += new Vector3(0, 0, diffZ * Time.deltaTime);
             //減算後に目標を超えた場合
-            if (route.getList()[index].transform.position.z < this.transform.position.z)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.z < this.transform.position.z)
             {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[index].transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, route.getList()[MoveStatus.NextIndex].transform.position.z);
             }
         }
     }
@@ -249,13 +247,13 @@ public class MoveSample : MonoBehaviour
     {
         if (Terrain.activeTerrain)
         {
-            if (this.IsUneven != route.getList()[oldindex].GetComponent<HandleData>().UnevenFlag)
+            if (this.IsUneven != route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().UnevenFlag)
             {
-                this.IsUneven = route.getList()[oldindex].GetComponent<HandleData>().UnevenFlag;
+                this.IsUneven = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().UnevenFlag;
             }
-            if (this.CorrectionHeight != route.getList()[oldindex].GetComponent<HandleData>().UnevenHeight)
+            if (this.CorrectionHeight != route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().UnevenHeight)
             {
-                this.CorrectionHeight = route.getList()[oldindex].GetComponent<HandleData>().UnevenHeight;
+                this.CorrectionHeight = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().UnevenHeight;
             }
         }
 
@@ -267,12 +265,12 @@ public class MoveSample : MonoBehaviour
     /// <returns>到達している場合True</returns>
     bool CheckPositions()
     {
-        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+        if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().BezierFlag)
         {
             //座標のX.Y座標が一致した
-            if (route.getList()[index + 1].transform.position.x == this.transform.position.x && route.getList()[index + 1].transform.position.z == this.transform.position.z)
+            if (route.getList()[MoveStatus.NextIndex + 1].transform.position.x == this.transform.position.x && route.getList()[MoveStatus.NextIndex + 1].transform.position.z == this.transform.position.z)
             {
-                if (route.getList()[index + 1].transform.position.y == this.transform.position.y || IsUneven)
+                if (route.getList()[MoveStatus.NextIndex + 1].transform.position.y == this.transform.position.y || IsUneven)
                 {
                     return true;
                 }
@@ -282,9 +280,9 @@ public class MoveSample : MonoBehaviour
         else
         {
             //座標のX.Y座標が一致した
-            if (route.getList()[index].transform.position.x == this.transform.position.x && route.getList()[index].transform.position.z == this.transform.position.z)
+            if (route.getList()[MoveStatus.NextIndex].transform.position.x == this.transform.position.x && route.getList()[MoveStatus.NextIndex].transform.position.z == this.transform.position.z)
             {
-                if (route.getList()[index].transform.position.y == this.transform.position.y || IsUneven)
+                if (route.getList()[MoveStatus.NextIndex].transform.position.y == this.transform.position.y || IsUneven)
                 {
                     return true;
                 }
@@ -298,45 +296,45 @@ public class MoveSample : MonoBehaviour
     /// </summary>
     void changeNextTarget()
     {
-        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+        if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().BezierFlag)
         {
             //現在地を保存する
-            oldindex = index + 1;
-            index++;
+            MoveStatus.OldIndex = MoveStatus.NextIndex + 1;
+            MoveStatus.NextIndex++;
             t = 0;
         }
         else
         {
             //現在地を保存する
-            oldindex = index;
+            MoveStatus.OldIndex = MoveStatus.NextIndex;
         }
 
         //リストの最後でない場合
-        if (++index < route.getList().Count)
+        if (++MoveStatus.NextIndex < route.getList().Count)
         {
             //存在するまで繰り返す
-            for (int i = index; i < route.getList().Count; i++)
+            for (int i = MoveStatus.NextIndex; i < route.getList().Count; i++)
             {
                 //リストが存在するか判定
                 if (route.getList()[i])
                 {
                     //存在しているので次の目的地をその場所まで飛ばす
-                    index = i;
+                    MoveStatus.NextIndex = i;
                     //目的地までの差分を計算する
-                    CalculationDiff(route.getList()[index].transform.position, this.transform.position);
+                    CalculationDiff(route.getList()[MoveStatus.NextIndex].transform.position, this.transform.position);
                     //タイマーをセットする
-                    this.Timer = route.getList()[oldindex].GetComponent<HandleData>().getStopTime();
+                    this.Timer = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getStopTime();
                     //目的地までのカメラの設定
-                    switch (route.getList()[oldindex].GetComponent<HandleData>().getLookOption())
+                    switch (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getLookOption())
                     {
                         case LookOption.LookAtHorizontal://水平方向
-                            target = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y + route.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                            target = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y + route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
                             break;
                         case LookOption.LookAtVertical://垂直方向
-                            target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z);
+                            target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y, transform.localEulerAngles.z);
                             break;
                         case LookOption.FreeChange://水平・垂直方向
-                            target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[oldindex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y + route.getList()[oldindex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
+                            target = Quaternion.Euler(transform.localEulerAngles.x + route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getVerticalAngle(), transform.localEulerAngles.y + route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getHorizontalAngle(), transform.localEulerAngles.z);
                             break;
                         default://その他の設定
                             break;
@@ -350,10 +348,11 @@ public class MoveSample : MonoBehaviour
                 if (route.getList().Count - 1 <= i)
                 {
                     //終了させる
-                    index = route.getList().Count;
+                    MoveStatus.NextIndex = route.getList().Count;
                 }
             }
         }
+        Destroy(route.getList()[MoveStatus.OldIndex - 1].gameObject);
     }
     /// <summary>
     /// 向く方向を設定する
@@ -361,23 +360,23 @@ public class MoveSample : MonoBehaviour
     void ChangeLook()
     {
         //目的値から振り向き速度を取得
-        float lookspeed = (route.getList()[oldindex].GetComponent<HandleData>().getLookSpeed() / 1000);
+        float lookspeed = (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getLookSpeed() / 1000);
         if (lookspeed <= 0)//設定していない場合
         {
             //距離に応じた速度を設定
-            lookspeed = 0.1f / CalculationTime(route.getList()[index].transform.position, transform.position);
+            lookspeed = 0.1f / CalculationTime(route.getList()[MoveStatus.NextIndex].transform.position, transform.position);
         }
         //目的地の条件を取得
-        switch (route.getList()[oldindex].GetComponent<HandleData>().getLookOption())
+        switch (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getLookOption())
         {
             case LookOption.NextTarget://次の目的地に向きを変える
                 if (Terrain.activeTerrain)
                 {
                     if (IsUneven)
                     {
-                        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                        if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().BezierFlag)
                         {
-                            Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                            Vector3 targetLookRotation = (transform.position + route.getList()[MoveStatus.NextIndex + 1].transform.position) - transform.position - transform.position;
                             targetLookRotation.y = 0f;
                             if (targetLookRotation != Vector3.zero)
                             {
@@ -386,16 +385,16 @@ public class MoveSample : MonoBehaviour
                         }
                         else
                         {
-                            Vector3 UnevenPosition = route.getList()[index].transform.position - transform.position;
+                            Vector3 UnevenPosition = route.getList()[MoveStatus.NextIndex].transform.position - transform.position;
                             UnevenPosition.y = 0;
                             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(UnevenPosition), lookspeed);
                         }
                     }
                     else
                     {
-                        if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                        if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().BezierFlag)
                         {
-                            Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                            Vector3 targetLookRotation = (transform.position + route.getList()[MoveStatus.NextIndex + 1].transform.position) - transform.position - transform.position;
                             if (targetLookRotation != Vector3.zero)
                             {
                                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetLookRotation), lookspeed);
@@ -403,15 +402,15 @@ public class MoveSample : MonoBehaviour
                         }
                         else
                         {
-                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[MoveStatus.NextIndex].transform.position - transform.position), lookspeed);
                         }
                     }
                 }
                 else
                 {
-                    if (route.getList()[oldindex].GetComponent<HandleData>().BezierFlag)
+                    if (route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().BezierFlag)
                     {
-                        Vector3 targetLookRotation = (transform.position + route.getList()[index + 1].transform.position) - transform.position - transform.position;
+                        Vector3 targetLookRotation = (transform.position + route.getList()[MoveStatus.NextIndex + 1].transform.position) - transform.position - transform.position;
                         if (targetLookRotation != Vector3.zero)
                         {
                             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetLookRotation), lookspeed);
@@ -419,7 +418,7 @@ public class MoveSample : MonoBehaviour
                     }
                     else
                     {
-                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[MoveStatus.NextIndex].transform.position - transform.position), lookspeed);
                     }
                 }
                 break;
@@ -432,16 +431,16 @@ public class MoveSample : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, target, lookspeed);
                 break;
             case LookOption.LookAtTarget://ターゲット追従
-                if (this.route.getList()[oldindex].GetComponent<HandleData>().getLookTarget())
+                if (this.route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getLookTarget())
                 {
                     //相対ベクトルを求める
-                    var aim = this.route.getList()[oldindex].GetComponent<HandleData>().getLookTarget().transform.position - this.transform.position;
+                    var aim = this.route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getLookTarget().transform.position - this.transform.position;
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aim), lookspeed);
                     break;
                 }
                 else
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[index].transform.position - transform.position), lookspeed);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(route.getList()[MoveStatus.NextIndex].transform.position - transform.position), lookspeed);
                 }
                 break;
             case LookOption.DontChange://動かさない
@@ -490,7 +489,7 @@ public class MoveSample : MonoBehaviour
     float CalculationTime(Vector3 StartVector, Vector3 EndVector)
     {
         //移動速度を目標ポイントから取得する
-        float speed = route.getList()[oldindex].GetComponent<HandleData>().getMoveSpeed();
+        float speed = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getMoveSpeed();
         //移動速度が設定されていない
         if (speed <= 0)
         {

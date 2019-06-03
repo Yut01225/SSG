@@ -28,7 +28,11 @@ public class CursorSystem : MonoBehaviour
         RaycastHit hit;
         if (Input.GetButtonDown("Fire1"))
         {
-            Shot(ray);
+            if (isRange)
+            {
+                Shot(ray);
+            }
+
         }
         if (Physics.Raycast(ray, out hit, Range, LayerMask.GetMask("Target")))
         {

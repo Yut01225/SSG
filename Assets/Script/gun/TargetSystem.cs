@@ -177,7 +177,7 @@ public class TargetSystem : MonoBehaviour
             var cube = obj.transform;
             if (this.Hitpoint > 0)
             {
-                cube.localScale = 0.03f * transform.localScale;
+                cube.localScale = 0.3f * transform.localScale;
                 cube.position = transform.TransformPoint(directions[i] / 4);
             }
             else

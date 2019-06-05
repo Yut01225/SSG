@@ -1,12 +1,14 @@
 ﻿using TMPro;
 using UnityEngine;
 
+
 public enum EffectType
 {
     Default,
     Big,
     Invisible,
-    Move
+    Move,
+    Flash
 }
 
 public class TargetSystem : MonoBehaviour
@@ -42,6 +44,8 @@ public class TargetSystem : MonoBehaviour
     public float StartTime;
 
     public bool IsRotation;
+
+    public FloorType floorType;
 
     void Start()
     {
@@ -85,6 +89,9 @@ public class TargetSystem : MonoBehaviour
                             break;
                         case EffectType.Move:
                             this.gameObject.AddComponent<Moving>().setting(this.AddPosition, this.transform.position, EffectSpeed, StartTime);
+                            break;
+                        case EffectType.Flash:
+                            this.gameObject.AddComponent<Flash>().setting(EffectSpeed, floorType);
                             break;
                     }
                 }

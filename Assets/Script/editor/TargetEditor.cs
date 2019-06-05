@@ -18,6 +18,7 @@ public class TargetEditor : Editor
     SerializedProperty LimitSize;
     SerializedProperty StartTime;
     SerializedProperty IsRotation;
+    SerializedProperty floorType;
 
     void OnEnable()
     {
@@ -35,6 +36,8 @@ public class TargetEditor : Editor
         LimitSize = serializedObject.FindProperty("LimitSize");
         StartTime = serializedObject.FindProperty("StartTime");
         IsRotation = serializedObject.FindProperty("IsRotation");
+        floorType = serializedObject.FindProperty("floorType");
+        
     }
 
     public override void OnInspectorGUI()
@@ -81,6 +84,10 @@ public class TargetEditor : Editor
                 myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
                 myData.StartTime = EditorGUILayout.FloatField("開始時間", myData.StartTime);
                 myData.AddPosition = EditorGUILayout.Vector3Field("出現する座標",myData.AddPosition);
+                break;
+            case EffectType.Flash:
+                myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
+                myData.floorType = (FloorType)EditorGUILayout.EnumPopup("出現タイプ", (FloorType)myData.floorType);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

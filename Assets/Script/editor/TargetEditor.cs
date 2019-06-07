@@ -19,6 +19,13 @@ public class TargetEditor : Editor
     SerializedProperty StartTime;
     SerializedProperty IsRotation;
     SerializedProperty floorType;
+    SerializedProperty right;
+    SerializedProperty up;
+    SerializedProperty front;
+    SerializedProperty left;
+    SerializedProperty down;
+    SerializedProperty back;
+    SerializedProperty CM;
 
     void OnEnable()
     {
@@ -37,8 +44,14 @@ public class TargetEditor : Editor
         StartTime = serializedObject.FindProperty("StartTime");
         IsRotation = serializedObject.FindProperty("IsRotation");
         floorType = serializedObject.FindProperty("floorType");
-        
-    }
+        right = serializedObject.FindProperty("right");
+        up = serializedObject.FindProperty("up");
+        front = serializedObject.FindProperty("front");
+        left = serializedObject.FindProperty("left");
+        down = serializedObject.FindProperty("down");
+        back = serializedObject.FindProperty("back");
+        CM = serializedObject.FindProperty("CM");
+}
 
     public override void OnInspectorGUI()
     {
@@ -88,6 +101,16 @@ public class TargetEditor : Editor
             case EffectType.Flash:
                 myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
                 myData.floorType = (FloorType)EditorGUILayout.EnumPopup("出現タイプ", (FloorType)myData.floorType);
+                break;
+            case EffectType.MoveBlock:
+                myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
+                myData.CM = EditorGUILayout.FloatField("移動距離", myData.CM);
+                myData.right = EditorGUILayout.ToggleLeft("右", myData.right);
+                myData.up = EditorGUILayout.ToggleLeft("上", myData.up);
+                myData.front = EditorGUILayout.ToggleLeft("前", myData.front);
+                myData.left = EditorGUILayout.ToggleLeft("左", myData.left);
+                myData.down = EditorGUILayout.ToggleLeft("下", myData.down);
+                myData.back = EditorGUILayout.ToggleLeft("後ろ", myData.back);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

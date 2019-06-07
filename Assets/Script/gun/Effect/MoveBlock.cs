@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//エレベーター
+//移動する
 public class MoveBlock : MonoBehaviour
 {
 
     private Rigidbody rb;
     private Vector3 defaultPos;
+  
+    public float speed;
+    float sum;
     public bool x = false;
     public bool y = false;
     public bool z = false;
@@ -15,17 +18,37 @@ public class MoveBlock : MonoBehaviour
     public bool y2 = false;
     public bool z2 = false;
     public float cm = 0f;
-    public float speed = 0f;
-    float sum;
+
+    public void setting(bool right, bool up, bool front, bool left, bool down, bool back, float CM, float effectspeed)
+    {
+        if (effectspeed <= 0)
+        {
+            speed = 1f;
+        }
+        else
+        {
+            speed = effectspeed;
+        }
+        x = right;
+        y = up;
+        z = front;
+        x2 = left;
+        y2 = down;
+        z2 = back;
+        cm = CM;
+
+}
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         defaultPos = transform.position;
-        transform.position += new Vector3(3f, 0, 0);
+        //transform.position += new Vector3(3f, 0, 0);
     }
 
-    void FixedUpdate()
+
+void FixedUpdate()
     {
         sum += Time.deltaTime * speed;
         if (x == true)

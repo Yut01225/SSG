@@ -105,8 +105,6 @@ public class MoveSample : MonoBehaviour
                 //向きを変える
                 ChangeLook();
 
-
-
                 if (route.getList()[MoveStatus.NextIndex - 1].GetComponent<HandleData>().BezierFlag)
                 {
                     float speed = route.getList()[MoveStatus.OldIndex].GetComponent<HandleData>().getMoveSpeed();

@@ -8,7 +8,8 @@ public enum EffectType
     Big,
     Invisible,
     Move,
-    Flash
+    Flash,
+    MoveBlock
 }
 
 public class TargetSystem : MonoBehaviour
@@ -46,6 +47,14 @@ public class TargetSystem : MonoBehaviour
     public bool IsRotation;
 
     public FloorType floorType;
+
+    public bool right;
+    public bool up;
+    public bool front;
+    public bool left;
+    public bool down;
+    public bool back;
+    public float CM;
 
     void Start()
     {
@@ -92,6 +101,10 @@ public class TargetSystem : MonoBehaviour
                             break;
                         case EffectType.Flash:
                             this.gameObject.AddComponent<Flash>().setting(EffectSpeed, floorType);
+                            break;
+                        case EffectType.MoveBlock:
+                            this.gameObject.AddComponent<Rigidbody>();
+                            this.gameObject.AddComponent<MoveBlock>().setting(right, up, front, left, down, back, CM, EffectSpeed);
                             break;
                     }
                 }

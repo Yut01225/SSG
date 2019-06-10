@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
+
 namespace RandomObj
 {
     public class SetGameObject : ScriptableWizard

@@ -103,7 +103,10 @@ public class TargetSystem : MonoBehaviour
                             this.gameObject.AddComponent<Flash>().setting(EffectSpeed, floorType);
                             break;
                         case EffectType.MoveBlock:
-                            this.gameObject.AddComponent<Rigidbody>();
+                            if (this.GetComponent<Rigidbody>() == null)
+                            {
+                                this.gameObject.AddComponent<Rigidbody>();     
+                            }
                             this.gameObject.AddComponent<MoveBlock>().setting(right, up, front, left, down, back, CM, EffectSpeed);
                             break;
                     }

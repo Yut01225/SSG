@@ -105,12 +105,12 @@ public class TargetEditor : Editor
             case EffectType.MoveBlock:
                 myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
                 myData.CM = EditorGUILayout.FloatField("移動距離", myData.CM);
-                myData.right = EditorGUILayout.ToggleLeft("右", myData.right);
-                myData.up = EditorGUILayout.ToggleLeft("上", myData.up);
-                myData.front = EditorGUILayout.ToggleLeft("前", myData.front);
-                myData.left = EditorGUILayout.ToggleLeft("左", myData.left);
-                myData.down = EditorGUILayout.ToggleLeft("下", myData.down);
-                myData.back = EditorGUILayout.ToggleLeft("後ろ", myData.back);
+                myData.right = EditorGUILayout.ToggleLeft("X", myData.right);
+                myData.up = EditorGUILayout.ToggleLeft("Y", myData.up);
+                myData.front = EditorGUILayout.ToggleLeft("Z", myData.front);
+                myData.left = EditorGUILayout.ToggleLeft("-X", myData.left);
+                myData.down = EditorGUILayout.ToggleLeft("-Y", myData.down);
+                myData.back = EditorGUILayout.ToggleLeft("-Z", myData.back);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

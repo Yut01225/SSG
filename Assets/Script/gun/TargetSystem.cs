@@ -105,7 +105,8 @@ public class TargetSystem : MonoBehaviour
                         case EffectType.MoveBlock:
                             if (this.GetComponent<Rigidbody>() == null)
                             {
-                                this.gameObject.AddComponent<Rigidbody>();     
+                                this.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+                                Debug.Log(transform.name + "のRigidbodyが未設定です");
                             }
                             this.gameObject.AddComponent<MoveBlock>().setting(right, up, front, left, down, back, CM, EffectSpeed);
                             break;

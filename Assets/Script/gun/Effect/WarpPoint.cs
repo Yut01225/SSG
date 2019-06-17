@@ -5,21 +5,25 @@ using UnityEngine;
 //ワープ
 public class WarpPoint : MonoBehaviour
 {
-
-    
     Vector3 tmp;
+    Quaternion tmp1;
     [SerializeField]
     List<int> wp;
     [SerializeField]
-    List<GameObject> warpPoint;
+    List<Transform> warpPoint;
 
-
-
-    private void Start()
+     public void setting(List<int> wplist, List<Transform> warppoint)
     {
-        tmp = warpPoint[0].gameObject.transform.position;
+        wp = wplist;
+
+        warpPoint = warppoint;
     }
 
+    private void Start()
+    {    
+        tmp = warpPoint[0].gameObject.transform.position;
+        tmp1 = warpPoint[0].gameObject.transform.localRotation; 
+    }
 
     public void Update()
     {
@@ -31,12 +35,11 @@ public class WarpPoint : MonoBehaviour
             {
                 tmp = warpPoint[point].gameObject.transform.position;
                 gameObject.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
-                
+
+                tmp1 = warpPoint[point].gameObject.transform.localRotation;
+                gameObject.transform.rotation = tmp1;
             }
-            point++;            
-            
-        }
-        
+            point++;               
+        }        
     }        
-    
 }

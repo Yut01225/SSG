@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -9,7 +10,8 @@ public enum EffectType
     Invisible,
     Move,
     Flash,
-    MoveBlock
+    MoveBlock,
+    Warp
 }
 
 public class TargetSystem : MonoBehaviour
@@ -55,6 +57,11 @@ public class TargetSystem : MonoBehaviour
     public bool down;
     public bool back;
     public float CM;
+
+    [SerializeField]
+    public List<int> wp;
+    [SerializeField]
+    public List<Transform> warpPoint;
 
     void Start()
     {
@@ -109,6 +116,9 @@ public class TargetSystem : MonoBehaviour
                                 Debug.Log(transform.name + "のRigidbodyが未設定です");
                             }
                             this.gameObject.AddComponent<MoveBlock>().setting(right, up, front, left, down, back, CM, EffectSpeed);
+                            break;
+                        case EffectType.Warp:
+                            this.gameObject.AddComponent<WarpPoint>().setting(wp, warpPoint);
                             break;
                     }
                 }

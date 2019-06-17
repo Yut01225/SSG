@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(TargetSystem))]
 [CanEditMultipleObjects]
@@ -26,6 +27,8 @@ public class TargetEditor : Editor
     SerializedProperty down;
     SerializedProperty back;
     SerializedProperty CM;
+    SerializedProperty wp;
+    SerializedProperty warpPoint;
 
     void OnEnable()
     {
@@ -51,7 +54,9 @@ public class TargetEditor : Editor
         down = serializedObject.FindProperty("down");
         back = serializedObject.FindProperty("back");
         CM = serializedObject.FindProperty("CM");
-}
+        wp = serializedObject.FindProperty("wp");
+        warpPoint = serializedObject.FindProperty("warpPoint");
+    }
 
     public override void OnInspectorGUI()
     {
@@ -111,6 +116,10 @@ public class TargetEditor : Editor
                 myData.left = EditorGUILayout.ToggleLeft("-X", myData.left);
                 myData.down = EditorGUILayout.ToggleLeft("-Y", myData.down);
                 myData.back = EditorGUILayout.ToggleLeft("-Z", myData.back);
+                break;
+            case EffectType.Warp:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("wp"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("warpPoint"), true);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

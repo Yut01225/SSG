@@ -63,6 +63,9 @@ public class TargetSystem : MonoBehaviour
     [SerializeField]
     public List<Transform> warpPoint;
 
+    //ターゲットの大きさ変更
+    public bool Tsize = true;
+
     void Start()
     {
         //色をランダムに変更
@@ -163,7 +166,13 @@ public class TargetSystem : MonoBehaviour
             {
                 TextCreate("+" + ClickPoint + "P");
                 IsBig = true;
-                NextSize = 0.9f * transform.localScale;
+                NextSize = transform.localScale;
+
+                if (Tsize == true)
+                {
+                    NextSize = 0.9f * transform.localScale;
+                }
+
             }
             else
             {

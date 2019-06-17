@@ -306,7 +306,7 @@ public class MoveSample : MonoBehaviour
             //現在地を保存する
             MoveStatus.OldIndex = MoveStatus.NextIndex;
         }
-
+        Debug.Log(MoveStatus.OldIndex);
         //リストの最後でない場合
         if (++MoveStatus.NextIndex < route.getList().Count)
         {

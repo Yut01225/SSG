@@ -72,7 +72,7 @@ public class TargetEditor : Editor
         myData.BrokenPoint = EditorGUILayout.IntField("破壊時の得点", myData.BrokenPoint);
         myData.CretateIndex = EditorGUILayout.IntField("生成する目的地番号", myData.CretateIndex);
         myData.IsRotation = EditorGUILayout.ToggleLeft("回転を有効にする", myData.IsRotation);
-        myData.Tsize = EditorGUILayout.ToggleLeft("大きさを変更する", myData.Tsize);
+        myData.Tsize = EditorGUILayout.ToggleLeft("Scaleを変化させる", myData.Tsize);
         EditorGUILayout.HelpBox("移動オブジェクトが指定したインデックスに到達したときに出現します。", MessageType.Info, true);
         EditorGUILayout.Space();
         GUILayout.Label("【オブジェクト設定】");

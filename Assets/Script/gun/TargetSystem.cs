@@ -65,11 +65,21 @@ public class TargetSystem : MonoBehaviour
 
     //ターゲットの大きさ変更
     public bool Tsize = true;
+    
+    //色の変更
+    public bool Changecolor = false;
+
+    //ターゲットの個別破壊
+    public bool td = false;
+    public GameObject d;
 
     void Start()
     {
+        if (Changecolor == true)
+        { 
         //色をランダムに変更
         this.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        }
         //自分の大きさを取得
         Size = this.transform.localScale.x;
         RotatePower = new Vector3(Random.Range(0.1f, 1) * 3, Random.Range(-1, 1) * 1, Random.Range(-1, 1) * 3);
@@ -159,6 +169,11 @@ public class TargetSystem : MonoBehaviour
             TextCreate("+" + BrokenPoint + "P");
             this.gameObject.layer = 0;
             Destroy(this.gameObject);
+
+            if (td == true)
+            {
+                Destroy(d);
+            }
         }
         else
         {

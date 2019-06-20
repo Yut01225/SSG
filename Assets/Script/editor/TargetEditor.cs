@@ -30,6 +30,9 @@ public class TargetEditor : Editor
     SerializedProperty wp;
     SerializedProperty warpPoint;
     SerializedProperty Tsize;
+    SerializedProperty Changecolor;
+    SerializedProperty td;
+    SerializedProperty d;
 
     void OnEnable()
     {
@@ -58,7 +61,10 @@ public class TargetEditor : Editor
         wp = serializedObject.FindProperty("wp");
         warpPoint = serializedObject.FindProperty("warpPoint");
         Tsize = serializedObject.FindProperty("Tsize");
-    }
+        Changecolor = serializedObject.FindProperty("Changecolor");
+        td = serializedObject.FindProperty("td");
+        d = serializedObject.FindProperty("d");
+}
 
     public override void OnInspectorGUI()
     {
@@ -73,6 +79,11 @@ public class TargetEditor : Editor
         myData.CretateIndex = EditorGUILayout.IntField("生成する目的地番号", myData.CretateIndex);
         myData.IsRotation = EditorGUILayout.ToggleLeft("回転を有効にする", myData.IsRotation);
         myData.Tsize = EditorGUILayout.ToggleLeft("Scaleを変化させる", myData.Tsize);
+        myData.Changecolor = EditorGUILayout.ToggleLeft("色をランダムに変化させる", myData.Changecolor);
+        myData.td = EditorGUILayout.ToggleLeft("一括破壊設定", myData.td);
+        if (myData.td) {
+            myData.d = (GameObject)EditorGUILayout.ObjectField("破壊オブジェクト", myData.d, typeof(GameObject), allowSceneObjects);
+        }  
         EditorGUILayout.HelpBox("移動オブジェクトが指定したインデックスに到達したときに出現します。", MessageType.Info, true);
         EditorGUILayout.Space();
         GUILayout.Label("【オブジェクト設定】");

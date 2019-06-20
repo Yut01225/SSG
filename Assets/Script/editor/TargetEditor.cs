@@ -29,6 +29,7 @@ public class TargetEditor : Editor
     SerializedProperty CM;
     SerializedProperty wp;
     SerializedProperty warpPoint;
+    SerializedProperty Tsize;
 
     void OnEnable()
     {
@@ -56,6 +57,7 @@ public class TargetEditor : Editor
         CM = serializedObject.FindProperty("CM");
         wp = serializedObject.FindProperty("wp");
         warpPoint = serializedObject.FindProperty("warpPoint");
+        Tsize = serializedObject.FindProperty("Tsize");
     }
 
     public override void OnInspectorGUI()
@@ -70,6 +72,7 @@ public class TargetEditor : Editor
         myData.BrokenPoint = EditorGUILayout.IntField("破壊時の得点", myData.BrokenPoint);
         myData.CretateIndex = EditorGUILayout.IntField("生成する目的地番号", myData.CretateIndex);
         myData.IsRotation = EditorGUILayout.ToggleLeft("回転を有効にする", myData.IsRotation);
+        myData.Tsize = EditorGUILayout.ToggleLeft("Scaleを変化させる", myData.Tsize);
         EditorGUILayout.HelpBox("移動オブジェクトが指定したインデックスに到達したときに出現します。", MessageType.Info, true);
         EditorGUILayout.Space();
         GUILayout.Label("【オブジェクト設定】");
@@ -118,7 +121,10 @@ public class TargetEditor : Editor
                 myData.back = EditorGUILayout.ToggleLeft("-Z", myData.back);
                 break;
             case EffectType.Warp:
+                GUILayout.Label("ワープ回数");
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("wp"), true);
+                EditorGUILayout.Space();
+                GUILayout.Label("ワープポイント");
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("warpPoint"), true);
                 break;
         }

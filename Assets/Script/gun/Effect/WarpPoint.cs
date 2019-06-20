@@ -21,8 +21,8 @@ public class WarpPoint : MonoBehaviour
 
     private void Start()
     {    
-        tmp = warpPoint[0].gameObject.transform.position;
-        tmp1 = warpPoint[0].gameObject.transform.localRotation; 
+        //tmp = warpPoint[0].gameObject.transform.position;
+        //tmp1 = warpPoint[0].gameObject.transform.localRotation; 
     }
 
     public void Update()
@@ -31,13 +31,17 @@ public class WarpPoint : MonoBehaviour
         
         for (int i = wp.Count; 0 < i; i--)
         {
-            if (MoveStatus.NextIndex == wp[point])
+            if (MoveStatus.OldIndex == wp[point])
             {
+                if(tmp != warpPoint[point].gameObject.transform.position)
+                {
                 tmp = warpPoint[point].gameObject.transform.position;
                 gameObject.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
 
                 tmp1 = warpPoint[point].gameObject.transform.localRotation;
                 gameObject.transform.rotation = tmp1;
+                }
+                
             }
             point++;               
         }        

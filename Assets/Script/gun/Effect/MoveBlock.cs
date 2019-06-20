@@ -10,6 +10,7 @@ public class MoveBlock : MonoBehaviour
     private Vector3 defaultPos;
   
     public float speed;
+    public float cm = 0f;
     float sum;
     public bool x = false;
     public bool y = false;
@@ -17,7 +18,7 @@ public class MoveBlock : MonoBehaviour
     public bool x2 = false;
     public bool y2 = false;
     public bool z2 = false;
-    public float cm = 0f;
+    
 
     public void setting(bool right, bool up, bool front, bool left, bool down, bool back, float CM, float effectspeed)
     {

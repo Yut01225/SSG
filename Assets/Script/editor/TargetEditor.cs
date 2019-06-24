@@ -33,6 +33,7 @@ public class TargetEditor : Editor
     SerializedProperty Changecolor;
     SerializedProperty td;
     SerializedProperty d;
+    SerializedProperty PrefabIndex;
 
     void OnEnable()
     {
@@ -64,14 +65,17 @@ public class TargetEditor : Editor
         Changecolor = serializedObject.FindProperty("Changecolor");
         td = serializedObject.FindProperty("td");
         d = serializedObject.FindProperty("d");
-}
+        PrefabIndex = serializedObject.FindProperty("PrefabIndex");
+    }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
         TargetSystem myData = (TargetSystem)target;
-       
- bool allowSceneObjects = !EditorUtility.IsPersistent(target);
+
+        myData.PrefabIndex = EditorGUILayout.IntField("プレハブ番号", myData.PrefabIndex);
+
+        bool allowSceneObjects = !EditorUtility.IsPersistent(target);
         GUILayout.Label("【基本設定】");
         myData.Hitpoint = EditorGUILayout.IntField("的の耐久値", myData.Hitpoint);
         myData.ClickPoint = EditorGUILayout.IntField("耐久減少時の得点", myData.ClickPoint);
@@ -81,13 +85,14 @@ public class TargetEditor : Editor
         myData.Tsize = EditorGUILayout.ToggleLeft("Scaleを変化させる", myData.Tsize);
         myData.Changecolor = EditorGUILayout.ToggleLeft("色をランダムに変化させる", myData.Changecolor);
         myData.td = EditorGUILayout.ToggleLeft("一括破壊設定", myData.td);
-        if (myData.td) {
+        if (myData.td)
+        {
             myData.d = (GameObject)EditorGUILayout.ObjectField("破壊オブジェクト", myData.d, typeof(GameObject), allowSceneObjects);
-        }  
+        }
         EditorGUILayout.HelpBox("移動オブジェクトが指定したインデックスに到達したときに出現します。", MessageType.Info, true);
         EditorGUILayout.Space();
         GUILayout.Label("【オブジェクト設定】");
-        
+
         myData.little = (GameObject)EditorGUILayout.ObjectField("破片用オブジェ", myData.little, typeof(GameObject), allowSceneObjects);
         EditorGUILayout.HelpBox("破損や破壊時に飛び散る破片オブジェクトを指定します。", MessageType.Info, true);
         myData.PointTextObject = (GameObject)EditorGUILayout.ObjectField("得点表示用オブジェ", myData.PointTextObject, typeof(GameObject), allowSceneObjects);
@@ -115,7 +120,7 @@ public class TargetEditor : Editor
                 EditorGUILayout.HelpBox("指定した座標分ずれた位置に移動します。その後、配置場所に戻ってきます。" + "\r\n" + "効果の速度:5f が初期値となっています。", MessageType.Info, true);
                 myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);
                 myData.StartTime = EditorGUILayout.FloatField("開始時間", myData.StartTime);
-                myData.AddPosition = EditorGUILayout.Vector3Field("出現する座標",myData.AddPosition);
+                myData.AddPosition = EditorGUILayout.Vector3Field("出現する座標", myData.AddPosition);
                 break;
             case EffectType.Flash:
                 myData.EffectSpeed = EditorGUILayout.FloatField("効果の速度", myData.EffectSpeed);

@@ -37,4 +37,7 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
+  - ChangeCursor
+  - SendID
+  - SendPoint
   DisableAutoOpenWizard: 1

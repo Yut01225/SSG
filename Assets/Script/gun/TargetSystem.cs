@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 
-
 public enum EffectType
 {
     Default,
@@ -65,7 +64,7 @@ public class TargetSystem : MonoBehaviour
 
     //ターゲットの大きさ変更
     public bool Tsize = true;
-    
+
     //色の変更
     public bool Changecolor = false;
 
@@ -73,12 +72,15 @@ public class TargetSystem : MonoBehaviour
     public bool td = false;
     public GameObject d;
 
+    //プレハブ番号
+    public int PrefabIndex;
+
     void Start()
     {
+        //色変更が有効の場合
         if (Changecolor == true)
-        { 
-        //色をランダムに変更
-        this.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        {
+            ChangeColor();
         }
         //自分の大きさを取得
         Size = this.transform.localScale.x;
@@ -88,6 +90,48 @@ public class TargetSystem : MonoBehaviour
             IsView = false;
             this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
+    }
+
+    public TargetSystem getStatus()
+    {
+        return this;
+    }
+
+    public void setStatus(TargetSystem ts)
+    {
+        IsBig = ts.IsBig;
+        Power = ts.Power;
+        RotatePower = ts.RotatePower;
+        IsView = ts.IsView;
+        NextSize = ts.NextSize;
+        Size = ts.Size;
+        Hitpoint = ts.Hitpoint;
+        little = ts.little;
+        ClickPoint = ts.ClickPoint;
+        BrokenPoint = ts.BrokenPoint;
+        PointTextObject = ts.PointTextObject;
+        CretateIndex = ts.CretateIndex;
+        type = ts.type;
+        EffectSpeed = ts.EffectSpeed;
+        AddPosition = ts.AddPosition;
+        LimitSize = ts.LimitSize;
+        StartTime = ts.StartTime;
+        IsRotation = ts.IsRotation;
+        floorType = ts.floorType;
+        right = ts.right;
+        up = ts.up;
+        front = ts.front;
+        left = ts.left;
+        down = ts.down;
+        back = ts.back;
+        CM = ts.CM;
+        wp = ts.wp;
+        warpPoint = ts.warpPoint;
+        Tsize = ts.Tsize;
+        Changecolor = ts.Changecolor;
+        td = ts.td;
+        d = ts.d;
+        PrefabIndex = ts.PrefabIndex;
     }
 
     void Update()
@@ -137,7 +181,6 @@ public class TargetSystem : MonoBehaviour
                 }
             }
 
-
             if (IsRotation)
             {
                 this.transform.Rotate(RotatePower);
@@ -160,6 +203,7 @@ public class TargetSystem : MonoBehaviour
 
     }
 
+    //当たったときの反応
     public void HitMe()
     {
         this.Hitpoint--;
@@ -198,9 +242,18 @@ public class TargetSystem : MonoBehaviour
         }
     }
 
+    //色変更
+    void ChangeColor()
+    {
+        this.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+    }
+
+    //得点作成
     public void TextCreate(string text)
     {
+        //得点オブジェクトを生成
         GameObject vp = Instantiate(PointTextObject, this.transform.position + new Vector3(0, 10, 0), Quaternion.identity) as GameObject;
+        //テキストを変更
         vp.GetComponent<TextMeshPro>().text = text;
     }
 

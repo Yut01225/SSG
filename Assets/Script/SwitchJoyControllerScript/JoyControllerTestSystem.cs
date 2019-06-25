@@ -55,6 +55,8 @@ public class JoyControllerTestSystem : MonoBehaviour
             m_joyconR.SetRumble(160, 320, 0.6f, 200);
         }
 
+
+
     }
 
     private void OnGUI()

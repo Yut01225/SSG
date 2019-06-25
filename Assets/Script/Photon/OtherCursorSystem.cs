@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,17 @@ public class OtherCursorSystem : Photon.MonoBehaviour
     //色を保持
     private Color MyColor;
 
+    //Joy-Con
+    private static readonly Joycon.Button[] m_buttons = Enum.GetValues(typeof(Joycon.Button)) as Joycon.Button[];
+
+    private List<Joycon> m_joycons;
+    private Joycon m_joyconL;
+    private Joycon m_joyconR;
+    private Joycon.Button? m_pressedButtonL;
+    private Joycon.Button? m_pressedButtonR;
+
+    private GameObject cur;
+
     void Start()
     {
         //射程を無効に初期化する
@@ -43,6 +55,16 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             MyColor = getMyColor(PhotonNetwork.player.ID);
             //カーソル色を変更
             this.GetComponent<Image>().color = MyColor;
+
+            //Joy-Con
+            m_joycons = JoyconManager.Instance.j;
+
+            if (m_joycons == null || m_joycons.Count <= 0) return;
+
+            m_joyconL = m_joycons.Find(c => c.isLeft);
+            m_joyconR = m_joycons.Find(c => !c.isLeft);
+
+
         }
     }
 
@@ -72,6 +94,44 @@ public class OtherCursorSystem : Photon.MonoBehaviour
     }
     void Update()
     {
+        //Joy-Con
+        m_pressedButtonL = null;
+        m_pressedButtonR = null;
+
+        if (m_joycons == null || m_joycons.Count <= 0) return;
+
+        foreach (var button in m_buttons)
+        {
+            if (m_joyconL.GetButton(button))
+            {
+                m_pressedButtonL = button;
+            }
+
+            if (m_joyconR.GetButton(button))
+            {
+                m_pressedButtonR = button;
+            }
+        }
+
+        const float MOVE_PER_CLOCK = 0.01f;
+        Vector3 joyconGyro;
+
+        // Joy-Conのジャイロ値を取得
+        joyconGyro = m_joyconR.GetGyro();
+        Quaternion sheepQuaternion = cur.transform.rotation;
+        // Joy-Conを横持ちした時にうまいこと向きが変わるようになっています。
+        sheepQuaternion.x += -joyconGyro[0] * MOVE_PER_CLOCK;
+        sheepQuaternion.y -= -joyconGyro[2] * MOVE_PER_CLOCK;
+        sheepQuaternion.z -= -joyconGyro[1] * MOVE_PER_CLOCK;
+        cur.transform.rotation = sheepQuaternion;
+
+        // 右Joy-ConのBボタンを押すと羊の向きがリセットされます。
+        if (m_joyconR.GetButtonDown(m_buttons[0]))
+        {
+            cur.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+
+
         //自分のカーソルの場合
         if (MyView.isMine)
         {

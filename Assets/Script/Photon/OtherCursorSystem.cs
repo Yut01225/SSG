@@ -32,7 +32,7 @@ public class OtherCursorSystem : Photon.MonoBehaviour
     private Joycon.Button? m_pressedButtonL;
     private Joycon.Button? m_pressedButtonR;
 
-    private GameObject cur;
+   public GameObject cur;
 
     void Start()
     {
@@ -56,14 +56,7 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             //カーソル色を変更
             this.GetComponent<Image>().color = MyColor;
 
-            //Joy-Con
-            m_joycons = JoyconManager.Instance.j;
-
-            if (m_joycons == null || m_joycons.Count <= 0) return;
-
-            m_joyconL = m_joycons.Find(c => c.isLeft);
-            m_joyconR = m_joycons.Find(c => !c.isLeft);
-
+            SetControllers();
 
         }
     }
@@ -100,6 +93,8 @@ public class OtherCursorSystem : Photon.MonoBehaviour
 
         if (m_joycons == null || m_joycons.Count <= 0) return;
 
+        SetControllers();
+
         foreach (var button in m_buttons)
         {
             if (m_joyconL.GetButton(button))
@@ -113,25 +108,10 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             }
         }
 
-        const float MOVE_PER_CLOCK = 0.01f;
-        Vector3 joyconGyro;
-
-        // Joy-Conのジャイロ値を取得
-        joyconGyro = m_joyconR.GetGyro();
-        Quaternion sheepQuaternion = cur.transform.rotation;
-        // Joy-Conを横持ちした時にうまいこと向きが変わるようになっています。
-        sheepQuaternion.x += -joyconGyro[0] * MOVE_PER_CLOCK;
-        sheepQuaternion.y -= -joyconGyro[2] * MOVE_PER_CLOCK;
-        sheepQuaternion.z -= -joyconGyro[1] * MOVE_PER_CLOCK;
-        cur.transform.rotation = sheepQuaternion;
-
-        // 右Joy-ConのBボタンを押すと羊の向きがリセットされます。
-        if (m_joyconR.GetButtonDown(m_buttons[0]))
-        {
-            cur.transform.rotation = new Quaternion(0, 0, 0, 0);
-        }
-
-
+        Vector3 joyconGyro = m_joyconR.GetGyro();
+        joyconGyro = new Vector3(joyconGyro[2] / 10, joyconGyro[1] / 10, 0);
+        cur.transform.position += joyconGyro;
+        
         //自分のカーソルの場合
         if (MyView.isMine)
         {
@@ -157,6 +137,11 @@ public class OtherCursorSystem : Photon.MonoBehaviour
                     //撃つ
                     Shot(hit);
                 }
+                // 右Joy-ConのRZボタンを押すと撃つ。
+                if (m_joyconR.GetButtonDown(m_buttons[15]))
+                {
+                    Shot(hit);
+                }
             }
             else//的にカーソルが無い場合
             {
@@ -171,7 +156,13 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             }
         }
     }
-
+    private void SetControllers()
+    {
+        m_joycons = JoyconManager.Instance.j;
+        if (m_joycons == null || m_joycons.Count <= 0) return;
+        m_joyconL = m_joycons.Find(c => c.isLeft);
+        m_joyconR = m_joycons.Find(c => !c.isLeft);
+    }
     //撃つ
     void Shot(RaycastHit hit)
     {

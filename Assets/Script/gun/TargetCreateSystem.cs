@@ -33,10 +33,10 @@ public class TargetCreateSystem : Photon.MonoBehaviour
                     ObjectName = "3DOBJ/Mato/ME1";
                     break;
                 case 1:
-                    ObjectName = "3DOBJ/Mato/ME2";
+                    ObjectName = "3DOBJ/SR/SR1";
                     break;
                 case 2:
-                    ObjectName = "3DOBJ/Mato/ME3";
+                    ObjectName = "3DOBJ/Mato/ME2";
                     break;
                 case 3:
                     ObjectName = "3DOBJ/Mato/ME4";
@@ -67,11 +67,12 @@ public class TargetCreateSystem : Photon.MonoBehaviour
             oc.GetComponent<TargetSystem>().setStatus(obj.GetComponent<TargetSystem>().getStatus());
             oc.transform.position = obj.transform.position;
             oc.transform.parent = obj.transform.parent;
+            oc.transform.rotation = obj.transform.localRotation;
             //通常オブジェクトを破壊
             Destroy(obj);
         }
         //生成インデックスでの並び替え
         //Array.Sort(TargetList, (a, b) => a.GetComponent<TargetSystem>().CretateIndex - b.GetComponent<TargetSystem>().CretateIndex);
-
+     
     }
 }

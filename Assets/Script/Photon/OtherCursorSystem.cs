@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,17 @@ public class OtherCursorSystem : Photon.MonoBehaviour
     //色を保持
     private Color MyColor;
 
+    //Joy-Con
+    private static readonly Joycon.Button[] m_buttons = Enum.GetValues(typeof(Joycon.Button)) as Joycon.Button[];
+
+    private List<Joycon> m_joycons;
+    private Joycon m_joyconL;
+    private Joycon m_joyconR;
+    private Joycon.Button? m_pressedButtonL;
+    private Joycon.Button? m_pressedButtonR;
+
+   public GameObject cur;
+
     void Start()
     {
         //射程を無効に初期化する
@@ -43,6 +55,9 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             MyColor = getMyColor(PhotonNetwork.player.ID);
             //カーソル色を変更
             this.GetComponent<Image>().color = MyColor;
+
+            SetControllers();
+
         }
     }
 
@@ -72,6 +87,31 @@ public class OtherCursorSystem : Photon.MonoBehaviour
     }
     void Update()
     {
+        //Joy-Con
+        m_pressedButtonL = null;
+        m_pressedButtonR = null;
+
+        if (m_joycons == null || m_joycons.Count <= 0) return;
+
+        SetControllers();
+
+        foreach (var button in m_buttons)
+        {
+            if (m_joyconL.GetButton(button))
+            {
+                m_pressedButtonL = button;
+            }
+
+            if (m_joyconR.GetButton(button))
+            {
+                m_pressedButtonR = button;
+            }
+        }
+
+        Vector3 joyconGyro = m_joyconR.GetGyro();
+        joyconGyro = new Vector3(joyconGyro[2] / 10, joyconGyro[1] / 10, 0);
+        cur.transform.position += joyconGyro;
+        
         //自分のカーソルの場合
         if (MyView.isMine)
         {
@@ -97,6 +137,11 @@ public class OtherCursorSystem : Photon.MonoBehaviour
                     //撃つ
                     Shot(hit);
                 }
+                // 右Joy-ConのRZボタンを押すと撃つ。
+                if (m_joyconR.GetButtonDown(m_buttons[15]))
+                {
+                    Shot(hit);
+                }
             }
             else//的にカーソルが無い場合
             {
@@ -111,7 +156,13 @@ public class OtherCursorSystem : Photon.MonoBehaviour
             }
         }
     }
-
+    private void SetControllers()
+    {
+        m_joycons = JoyconManager.Instance.j;
+        if (m_joycons == null || m_joycons.Count <= 0) return;
+        m_joyconL = m_joycons.Find(c => c.isLeft);
+        m_joyconR = m_joycons.Find(c => !c.isLeft);
+    }
     //撃つ
     void Shot(RaycastHit hit)
     {

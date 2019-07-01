@@ -1,28 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JoyControllerTestSystem : MonoBehaviour
+public class JoyConSample : MonoBehaviour
 {
-
     private static readonly Joycon.Button[] m_buttons =
-        Enum.GetValues(typeof(Joycon.Button)) as Joycon.Button[];
-    
+       Enum.GetValues(typeof(Joycon.Button)) as Joycon.Button[];
+
     private List<Joycon> m_joycons;
     private Joycon m_joyconL;
     private Joycon m_joyconR;
     private Joycon.Button? m_pressedButtonL;
     private Joycon.Button? m_pressedButtonR;
 
+    //動かす物
+    public GameObject Mono;
+
     private void Start()
     {
-        m_joycons = JoyconManager.Instance.j;
-
-        if (m_joycons == null || m_joycons.Count <= 0) return;
-
-        m_joyconL = m_joycons.Find(c => c.isLeft);
-        m_joyconR = m_joycons.Find(c => !c.isLeft);
+        SetControllers();
     }
 
     private void Update()
@@ -32,35 +30,43 @@ public class JoyControllerTestSystem : MonoBehaviour
 
         if (m_joycons == null || m_joycons.Count <= 0) return;
 
+        SetControllers();
+
         foreach (var button in m_buttons)
         {
             if (m_joyconL.GetButton(button))
             {
                 m_pressedButtonL = button;
             }
-
             if (m_joyconR.GetButton(button))
             {
                 m_pressedButtonR = button;
             }
         }
-
+        /*
         if (Input.GetKeyDown(KeyCode.Z))
         {
             m_joyconL.SetRumble(160, 320, 0.6f, 200);
         }
-
         if (Input.GetKeyDown(KeyCode.X))
         {
             m_joyconR.SetRumble(160, 320, 0.6f, 200);
         }
+        */
+        Vector3 joyconGyro = m_joyconR.GetGyro();
+        joyconGyro = new Vector3(joyconGyro[2] / 10, joyconGyro[1] / 10,0);
+        Mono.transform.position += joyconGyro;
 
-
+        if (m_joyconR.GetButtonDown(m_buttons[6]))
+        {
+            Mono.transform.rotation = new Quaternion(0, 180, 0, 0);
+            Mono.transform.position = new Vector3(0, 2, -12);
+        }
 
     }
 
     private void OnGUI()
-    {
+    {/*
         var style = GUI.skin.GetStyle("label");
         style.fontSize = 24;
 
@@ -81,9 +87,9 @@ public class JoyControllerTestSystem : MonoBehaviour
             GUILayout.Label("Joy-Con (R) が接続されていません");
             return;
         }
-
+        
         GUILayout.BeginHorizontal(GUILayout.Width(960));
-
+        
         foreach (var joycon in m_joycons)
         {
             var isLeft = joycon.isLeft;
@@ -105,7 +111,16 @@ public class JoyControllerTestSystem : MonoBehaviour
             GUILayout.Label("傾き：" + orientation);
             GUILayout.EndVertical();
         }
+        
+        
+        GUILayout.EndHorizontal();*/
+    }
 
-        GUILayout.EndHorizontal();
+    private void SetControllers()
+    {
+        m_joycons = JoyconManager.Instance.j;
+        if (m_joycons == null || m_joycons.Count <= 0) return;
+        m_joyconL = m_joycons.Find(c => c.isLeft);
+        m_joyconR = m_joycons.Find(c => !c.isLeft);
     }
 }

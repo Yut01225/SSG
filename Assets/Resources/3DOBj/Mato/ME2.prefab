@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 8371359377824008976}
   - component: {fileID: 8371359377824008977}
   - component: {fileID: 8371359377824008983}
-  - component: {fileID: -1297859733794043742}
-  - component: {fileID: -7336687648689367980}
   m_Layer: 10
-  m_Name: ME
+  m_Name: ME2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508033842111121151}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -577.4, y: -32.6, z: -327.3}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -585.6, y: -32.6, z: -330.7}
   m_LocalScale: {x: 1000, y: 1000, z: 1000}
   m_Children:
   - {fileID: 6575190943805612985}
@@ -104,11 +102,11 @@ MonoBehaviour:
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0
-  type: 0
-  EffectSpeed: 0
+  type: 1
+  EffectSpeed: 500
   AddPosition: {x: 0, y: 0, z: 0}
-  LimitSize: 0
-  StartTime: 0
+  LimitSize: 2000
+  StartTime: 800
   IsRotation: 0
   floorType: 0
   right: 0
@@ -125,111 +123,6 @@ MonoBehaviour:
   td: 0
   d: {fileID: 0}
   PrefabIndex: 0
---- !u!114 &-1297859733794043742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508033842111121151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: 0
-  group: 0
-  OwnerShipWasTransfered: 0
-  prefixBackup: -1
-  synchronization: 3
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
-  ownershipTransfer: 0
-  ObservedComponents:
-  - {fileID: -7336687648689367980}
-  ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
-  currentMasterID: -1
-  isRuntimeInstantiated: 0
---- !u!114 &-7336687648689367980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508033842111121151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 0
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    InterpolateMoveTowardsAcceleration: 2
-    InterpolateMoveTowardsDeceleration: 2
-    InterpolateSpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: -1
-        value: 0
-        inSlope: 0
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 4
-        value: 4
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
 --- !u!1 &3340937799381723580
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +135,7 @@ GameObject:
   - component: {fileID: 5079647955619358321}
   - component: {fileID: 2277342910766496202}
   - component: {fileID: 8371359377044010445}
-  - component: {fileID: 8371359377044010446}
+  - component: {fileID: 828062095668459407}
   m_Layer: 10
   m_Name: root 5
   m_TagString: Untagged
@@ -322,7 +215,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.00013233314
   m_Center: {x: 0.00007758745, y: 0.0031869067, z: 0.006479299}
---- !u!114 &8371359377044010446
+--- !u!114 &828062095668459407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,7 +230,7 @@ MonoBehaviour:
   Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 0
-  BrokenPoint: 100
+  BrokenPoint: 80
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0
@@ -374,7 +267,7 @@ GameObject:
   - component: {fileID: 5801024909531303999}
   - component: {fileID: 7385203762609584083}
   - component: {fileID: 8371359377158243621}
-  - component: {fileID: 8371359377158243622}
+  - component: {fileID: 4888925401301644058}
   m_Layer: 10
   m_Name: root 1
   m_TagString: Untagged
@@ -421,7 +314,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c7f4d02d1672542428bbfdfa9918de56, type: 2}
+  - {fileID: 2100000, guid: af59f7f22dc56a543895a153fa290ede, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -454,7 +347,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.0042238324
   m_Center: {x: -0.000084799714, y: 0.0028397914, z: 0.0019996949}
---- !u!114 &8371359377158243622
+--- !u!114 &4888925401301644058
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -466,10 +359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 1
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 0
-  BrokenPoint: 10
+  BrokenPoint: 30
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0
@@ -506,7 +399,7 @@ GameObject:
   - component: {fileID: 3126936151454058113}
   - component: {fileID: 50231713653553099}
   - component: {fileID: 8371359378257735060}
-  - component: {fileID: 8371359378257735061}
+  - component: {fileID: 6599036943683766894}
   m_Layer: 10
   m_Name: root 2
   m_TagString: Untagged
@@ -553,7 +446,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2609abdcbd5bbef469d30691626dab86, type: 2}
+  - {fileID: 2100000, guid: c54d8facd5708e0429cd9d4ed5f56921, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -586,7 +479,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.0035011398
   m_Center: {x: -0.000099561876, y: 0.0028870925, z: 0.0029192544}
---- !u!114 &8371359378257735061
+--- !u!114 &6599036943683766894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -598,10 +491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 1
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 0
-  BrokenPoint: 20
+  BrokenPoint: 40
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0
@@ -638,7 +531,7 @@ GameObject:
   - component: {fileID: 6375997560755806402}
   - component: {fileID: 5920276721230604780}
   - component: {fileID: 8371359379098727396}
-  - component: {fileID: 8371359379098727397}
+  - component: {fileID: 8823455470579528474}
   m_Layer: 10
   m_Name: root 4
   m_TagString: Untagged
@@ -718,7 +611,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.00076172757
   m_Center: {x: 0.00044427114, y: 0.0034261232, z: 0.0057388158}
---- !u!114 &8371359379098727397
+--- !u!114 &8823455470579528474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -730,10 +623,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 1
+  Hitpoint: 3
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 0
-  BrokenPoint: 50
+  BrokenPoint: 70
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0
@@ -770,7 +663,7 @@ GameObject:
   - component: {fileID: 681574011981173819}
   - component: {fileID: 5306528337615538098}
   - component: {fileID: 8371359378005191484}
-  - component: {fileID: 8371359378005191485}
+  - component: {fileID: 3709247397414972952}
   m_Layer: 10
   m_Name: root 3
   m_TagString: Untagged
@@ -850,7 +743,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.0020239588
   m_Center: {x: -0.00010419189, y: 0.0029245338, z: 0.0045539527}
---- !u!114 &8371359378005191485
+--- !u!114 &3709247397414972952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -862,10 +755,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 1
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 0
-  BrokenPoint: 30
+  BrokenPoint: 50
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 0

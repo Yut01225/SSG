@@ -160,10 +160,12 @@ public class OfflineCursorSystem : MonoBehaviour
         //自分の場所に得点を追加
         SUMPoint += hit.collider.gameObject.GetComponent<TargetSystem>().getPoint();
         //当たった場合の動作を開始する
+        hit.collider.gameObject.GetComponent<TargetSystem>().HitMe();
+        /*
         if (hit.collider.gameObject.GetComponent<TargetSystem>().HitMe())
         {
             //UseJoyCon.SetRumble(160, 320, 0.6f, 200);
-        }
+        }*/
     }
 
     /// <summary>

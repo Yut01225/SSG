@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2670194292817039661}
   - component: {fileID: 2670194292817039657}
+  - component: {fileID: -1052750981183288597}
   - component: {fileID: 2670194292817039662}
   - component: {fileID: 2670194292817039663}
-  - component: {fileID: 2670194292817039660}
   m_Layer: 5
   m_Name: OfflineCursor
   m_TagString: Untagged
@@ -47,6 +47,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2670194292817039650}
   m_CullTransparentMesh: 0
+--- !u!114 &-1052750981183288597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670194292817039650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0af32e671f3a854689d281d8a7517ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 150
+  Skin: {fileID: 11400000, guid: 1cfc92c3ad10ca5499bced4e35c77aa2, type: 2}
+  MyID: 1
+  ShotWait: 0
 --- !u!114 &2670194292817039662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,19 +106,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnableIMU: 1
   EnableLocalize: 1
---- !u!114 &2670194292817039660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670194292817039650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0af32e671f3a854689d281d8a7517ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 150
-  Skin: {fileID: 11400000, guid: 1cfc92c3ad10ca5499bced4e35c77aa2, type: 2}
-  MyID: 4
-  ShotWait: 0

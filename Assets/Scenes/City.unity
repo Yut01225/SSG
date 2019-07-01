@@ -1899,7 +1899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -2260,7 +2260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100778636}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.446, y: 0.142, z: 1.86}
+  m_LocalPosition: {x: -0.446, y: 0.142, z: 10.896999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1079163100}
@@ -2324,10 +2324,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 0
+  BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -2990,7 +2990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -4315,10 +4315,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 0
+  BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -5592,7 +5592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hitpoint: 2
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 0
+  ClickPoint: 20
   BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
@@ -6523,7 +6523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -7085,10 +7085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 0
+  BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -9008,7 +9008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hitpoint: 2
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 0
+  ClickPoint: 20
   BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
@@ -13547,10 +13547,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 2
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 50
+  BrokenPoint: 150
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -14142,7 +14142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 0
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -15241,10 +15241,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 10
+  BrokenPoint: 20
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 7
@@ -20191,7 +20191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -21219,7 +21219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -23566,7 +23566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -24090,7 +24090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -24891,10 +24891,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 10
+  BrokenPoint: 20
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 11
@@ -25880,7 +25880,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352978954}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.552, y: -0.333, z: 0.5599999}
+  m_LocalPosition: {x: 2.552, y: -0.333, z: 9.596999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 854131864}
@@ -25944,10 +25944,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 0
+  BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -26869,7 +26869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404142706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.297, y: -2.251, z: 52.27}
+  m_LocalPosition: {x: 0.297, y: -2.251, z: 45.76}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1376573905}
@@ -26933,10 +26933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 10
+  BrokenPoint: 20
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 11
@@ -27101,7 +27101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -28316,7 +28316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -29048,7 +29048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -30087,7 +30087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -30208,7 +30208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644879638}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.019, y: -0.469, z: 2.483}
+  m_LocalPosition: {x: 2.019, y: -0.469, z: 11.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 808080753}
@@ -30272,10 +30272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 1
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 20
-  BrokenPoint: 500
+  ClickPoint: 0
+  BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
   CretateIndex: 5
@@ -31689,7 +31689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -31932,7 +31932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d875e995412b4fa735a41f0af68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hitpoint: 10
+  Hitpoint: 5
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
   ClickPoint: 20
   BrokenPoint: 100
@@ -34451,7 +34451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hitpoint: 2
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 0
+  ClickPoint: 20
   BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}
@@ -34888,7 +34888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbf6c9035a8b5040ae1d1bd82c8e1cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 335.67926, y: -1.2990227, z: -130.91638}
+  pos: {x: 335.67926, y: -1.299017, z: -113.59469}
   rot: {x: -0, y: 1, z: -0.00000016888312, w: 0}
   scale: {x: 51, y: 111, z: 111}
   route: {fileID: 281760491}
@@ -34972,7 +34972,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941932470}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -124801.83, y: 2211.8652, z: 2389.0679}
+  m_LocalPosition: {x: -124801.83, y: 2211.865, z: -5395.879}
   m_LocalScale: {x: 51, y: 111, z: 111}
   m_Children: []
   m_Father: {fileID: 281760492}
@@ -37125,7 +37125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hitpoint: 2
   little: {fileID: 8510676333760835334, guid: 3b249f1ae06d49e448233ccfbada265c, type: 3}
-  ClickPoint: 0
+  ClickPoint: 20
   BrokenPoint: 100
   PointTextObject: {fileID: 7385637397636239311, guid: e706eee376c9c334b95bfa2eb9264e55,
     type: 3}

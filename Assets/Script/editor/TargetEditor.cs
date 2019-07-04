@@ -34,6 +34,7 @@ public class TargetEditor : Editor
     SerializedProperty td;
     SerializedProperty d;
     SerializedProperty PrefabIndex;
+    SerializedProperty dobj;
 
     void OnEnable()
     {
@@ -66,6 +67,7 @@ public class TargetEditor : Editor
         td = serializedObject.FindProperty("td");
         d = serializedObject.FindProperty("d");
         PrefabIndex = serializedObject.FindProperty("PrefabIndex");
+        dobj = serializedObject.FindProperty("dobj");
     }
 
     public override void OnInspectorGUI()
@@ -142,6 +144,9 @@ public class TargetEditor : Editor
                 EditorGUILayout.Space();
                 GUILayout.Label("ワープポイント");
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("warpPoint"), true);
+                break;
+            case EffectType.Chain:
+                myData.dobj = (GameObject)EditorGUILayout.ObjectField("破壊オブジェ", myData.dobj, typeof(GameObject), allowSceneObjects);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

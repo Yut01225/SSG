@@ -1,139 +1,93 @@
 fileFormatVersion: 2
-guid: 0c2de04ae5761f24c94296a29f9faf74
+guid: c9e78b5bcb411294c8fbe20ef1546ef9
 ModelImporter:
-  serializedVersion: 18
-  fileIDToRecycleName:
-    100000: Base_Bone
-    100002: Gun_Bone
-    100004: LeftWheel10_bone
-    100006: LeftWheel11_bone
-    100008: LeftWheel12_bone
-    100010: LeftWheel13_bone
-    100012: LeftWheel1_bone
-    100014: LeftWheel2_bone
-    100016: LeftWheel3_bone
-    100018: LeftWheel4_bone
-    100020: LeftWheel5_bone
-    100022: LeftWheel6_bone
-    100024: LeftWheel7_bone
-    100026: LeftWheel8_bone
-    100028: LeftWheel9_bone
-    100030: MC-1_Armature
-    100032: MC-1_Base
-    100034: MC-1_LeftTrack
-    100036: MC-1_RightTrack
-    100038: //RootNode
-    100040: RightWheel10_Bone
-    100042: RightWheel11_Bone
-    100044: RightWheel12_Bone
-    100046: RightWheel13_Bone
-    100048: RightWheel1_Bone
-    100050: RightWheel2_Bone
-    100052: RightWheel3_Bone
-    100054: RightWheel4_Bone
-    100056: RightWheel5_Bone
-    100058: RightWheel6_Bone
-    100060: RightWheel7_Bone
-    100062: RightWheel8_Bone
-    100064: RightWheel9_Bone
-    100066: Tower_Bone
-    400000: Base_Bone
-    400002: Gun_Bone
-    400004: LeftWheel10_bone
-    400006: LeftWheel11_bone
-    400008: LeftWheel12_bone
-    400010: LeftWheel13_bone
-    400012: LeftWheel1_bone
-    400014: LeftWheel2_bone
-    400016: LeftWheel3_bone
-    400018: LeftWheel4_bone
-    400020: LeftWheel5_bone
-    400022: LeftWheel6_bone
-    400024: LeftWheel7_bone
-    400026: LeftWheel8_bone
-    400028: LeftWheel9_bone
-    400030: MC-1_Armature
-    400032: MC-1_Base
-    400034: MC-1_LeftTrack
-    400036: MC-1_RightTrack
-    400038: //RootNode
-    400040: RightWheel10_Bone
-    400042: RightWheel11_Bone
-    400044: RightWheel12_Bone
-    400046: RightWheel13_Bone
-    400048: RightWheel1_Bone
-    400050: RightWheel2_Bone
-    400052: RightWheel3_Bone
-    400054: RightWheel4_Bone
-    400056: RightWheel5_Bone
-    400058: RightWheel6_Bone
-    400060: RightWheel7_Bone
-    400062: RightWheel8_Bone
-    400064: RightWheel9_Bone
-    400066: Tower_Bone
-    2300000: MC-1_LeftTrack
-    2300002: MC-1_RightTrack
-    3300000: MC-1_LeftTrack
-    3300002: MC-1_RightTrack
-    4300000: MC-1_Base
-    4300002: MC-1_LeftTrack
-    4300004: MC-1_RightTrack
-    9500000: //RootNode
-    13700000: MC-1_Base
+  serializedVersion: 25
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

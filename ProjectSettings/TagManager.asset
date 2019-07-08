@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Water
   - Target
-  - DB
+  - DB1
+  - DB2
+  - Boxs
   layers:
   - Default
   - TransparentFX

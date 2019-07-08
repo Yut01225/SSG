@@ -10,8 +10,7 @@ public enum EffectType
     Move,
     Flash,
     MoveBlock,
-    Warp,
-    Chain
+    Warp
 }
 
 public class TargetSystem : MonoBehaviour
@@ -62,8 +61,6 @@ public class TargetSystem : MonoBehaviour
     public List<int> wp;
     [SerializeField]
     public List<Transform> warpPoint;
-
-    public GameObject dobj;
 
     //ターゲットの大きさ変更
     public bool Tsize = true;
@@ -135,8 +132,7 @@ public class TargetSystem : MonoBehaviour
         td = ts.td;
         d = ts.d;
         PrefabIndex = ts.PrefabIndex;
-        dobj = ts.dobj;
-}
+    }
 
     void Update()
     {
@@ -180,9 +176,6 @@ public class TargetSystem : MonoBehaviour
                             break;
                         case EffectType.Warp:
                             this.gameObject.AddComponent<WarpPoint>().setting(wp, warpPoint);
-                            break;
-                        case EffectType.Chain:
-                            this.gameObject.AddComponent<Chain>().setting(dobj);
                             break;
                     }
                 }

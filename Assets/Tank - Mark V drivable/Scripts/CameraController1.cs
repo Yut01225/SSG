@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController1 : MonoBehaviour {
 
     public Transform lookAt;
     public Transform camTransform;

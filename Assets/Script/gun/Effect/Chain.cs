@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class Chain : MonoBehaviour
 {
-    public GameObject Dobj;
-    TargetSystem t = new TargetSystem();
-    public void setting(GameObject dobj)
+    public string Tagname;
+    public TargetSystem Ts;
+    public int CompPoint;
+    public int TriggerCount;
+
+    void Start()
     {
-        Dobj = dobj;
+        if (Ts == null)
+        {
+            Ts = this.GetComponent<TargetSystem>();
+        }
+        
+        if (TriggerCount < 1)
+        {
+            TriggerCount = 1;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject[] DB = GameObject.FindGameObjectsWithTag("DB");
-        
-        if (DB.Length == 1)
+        GameObject[] chain = GameObject.FindGameObjectsWithTag(Tagname);
+
+        if (chain.Length == TriggerCount)
         {
-            t.getPoint();
-            Debug.Log("成功");
-            //Destroy(Dobj);
+            Ts.BrokenPoint += CompPoint;
+            Destroy(this);
         }
     }
 }

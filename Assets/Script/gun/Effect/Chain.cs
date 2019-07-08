@@ -8,9 +8,15 @@ public class Chain : MonoBehaviour
     public TargetSystem Ts;
     public int CompPoint;
     public int TriggerCount;
+    public bool bosscreate = false;
+    public GameObject Boss;
+
+
 
     void Start()
     {
+        Boss.SetActive(false);
+
         if (Ts == null)
         {
             Ts = this.GetComponent<TargetSystem>();
@@ -29,6 +35,11 @@ public class Chain : MonoBehaviour
 
         if (chain.Length == TriggerCount)
         {
+            if (bosscreate)
+            {
+                Boss.SetActive(true);
+            }
+
             Ts.BrokenPoint += CompPoint;
             Destroy(this);
         }
